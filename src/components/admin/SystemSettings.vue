@@ -154,13 +154,13 @@
         <div class="config-item">
           <label>GitHub 仓库所有者 (VITE_GITHUB_OWNER):</label>
           <div class="config-value">
-            <span class="value-display">{{ envConfig.githubOwner || '默认: maodeyu180' }}</span>
+            <span class="value-display">{{ envConfig.githubOwner || '默认: your-username' }}</span>
           </div>
         </div>
         <div class="config-item">
           <label>GitHub 仓库名称 (VITE_GITHUB_REPO):</label>
           <div class="config-value">
-            <span class="value-display">{{ envConfig.githubRepo || '默认: mao_nav' }}</span>
+            <span class="value-display">{{ envConfig.githubRepo || '默认: eckes_nav' }}</span>
           </div>
         </div>
         <div class="config-item">
@@ -181,7 +181,7 @@
           <ol>
             <li>访问 <a href="https://github.com/settings/tokens" target="_blank" rel="noopener noreferrer">GitHub Settings → Developer settings → Personal access tokens</a></li>
             <li>点击 "Generate new token" → "Generate new token (fine-grained token)"</li>
-            <li>设置 Token 名称，选择过期时间,仓库只选择mao_nav 防止token 泄露影响自己其他工程</li>
+            <li>设置 Token 名称，选择过期时间,仓库只选择eckes_nav 防止token 泄露影响自己其他工程</li>
             <li>
               <strong>在 <span style="color:#3498db">Repository permissions (仓库权限)</span> 部分，勾选以下权限：</strong>
               <ul>
@@ -388,7 +388,7 @@ const getSystemInfo = () => {
 const loadWebsiteSettings = async () => {
   try {
     const data = await loadCategoriesFromGitHub()
-    currentTitle.value = data.title || '猫猫导航'
+    currentTitle.value = data.title || 'Eckes导航'
     websiteTitle.value = currentTitle.value
 
     // 加载搜索引擎设置
@@ -396,8 +396,8 @@ const loadWebsiteSettings = async () => {
     searchEngine.value = currentSearchEngine.value
   } catch (error) {
     console.error('加载网站设置失败:', error)
-    currentTitle.value = '猫猫导航'
-    websiteTitle.value = '猫猫导航'
+    currentTitle.value = 'Eckes导航'
+    websiteTitle.value = 'Eckes导航'
     currentSearchEngine.value = 'bing'
     searchEngine.value = 'bing'
   }

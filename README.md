@@ -1,4 +1,4 @@
-# 🐱 猫猫导航 (Mao Nav)
+# 🌟 Eckes导航 (Eckes Nav)
 
 > 一个简洁美观的个人导航网站，支持分类管理和自定义收藏夹
 
@@ -16,7 +16,7 @@
 - 2025-08-11 增加夜间模式，增加默认搜索引擎设置功能。
 
 ## 效果预览
-示例站点: [猫猫导航](https://nav.maodeyu.fun)
+示例站点: [Eckes导航](https://nav.maodeyu.fun)
 ![](preview.png)
 
 ## ✨ 特性
@@ -31,7 +31,7 @@
 
 
 ## 🚀 快速开始
-图文教程可访问[猫猫导航图文教程](https://blog.maodeyu.fun/2025/07/16/nav_mao/)
+图文教程可访问[Eckes导航图文教程](https://blog.maodeyu.fun/2025/07/16/nav_mao/)
 ### 🚀 部署到 Cloudflare（推荐）
 
 **1. Fork 本项目**
@@ -43,7 +43,7 @@
 2. 注册/登录 Cloudflare 账号（免费）
 3. 点击左侧菜单 **"Workers & Pages"**
 4. 点击 **"Create application"** → **"Pages"** → **"Connect to Git"**
-5. 授权 GitHub 并选择你 Fork 的 `mao_nav` 仓库
+5. 授权 GitHub 并选择你 Fork 的 `eckes_nav` 仓库
 6. 配置构建设置：
    - **Framework preset**: `Vue`
    - **Build command**: `npm run build`
@@ -72,7 +72,7 @@
 1. 访问 [Vercel 官网](https://vercel.com/)
 2. 注册/登录 Vercel 账号（免费）
 3. 点击右上角 **"Add New"** → **"Project"**
-4. 选择你 Fork 的 `mao_nav` 仓库，点击 **"Import"**
+4. 选择你 Fork 的 `eckes_nav` 仓库，点击 **"Import"**
 5. 保持默认设置，Vercel 会自动检测到是 Vue 项目
    - **Framework Preset**: `Vite`
    - **Build Command**: `npm run build`
@@ -98,7 +98,7 @@
 
 1. 访问 [GitHub Settings → Developer settings → Personal access tokens](https://github.com/settings/tokens)
 2. 点击 "Generate new token" → "Generate new token (fine-grained token)"
-3. 设置 Token 名称，选择过期时间，并**只选择你的 mao_nav 仓库**（这样即使 token 泄露也不会影响你其他项目）
+3. 设置 Token 名称，选择过期时间，并**只选择你的 eckes_nav 仓库**（这样即使 token 泄露也不会影响你其他项目）
 4. 在 **Repository permissions (仓库权限)** 部分，勾选以下权限：
    - `Contents` - **Read and write** ✅  
      <span style="color:#888;font-size:13px;">用于读取和修改 <code>src/mock/mock_data.js</code> 文件，这是管理系统的核心功能</span>
@@ -133,8 +133,8 @@ VITE_GITHUB_BRANCH=your_github_branch_here
 
 1. **克隆项目**
 ```bash
-git clone https://github.com/your-username/mao_nav.git
-cd mao_nav
+git clone https://github.com/your-username/eckes_nav.git
+cd eckes_nav
 ```
 
 2. **安装依赖**
@@ -152,7 +152,7 @@ npm run dev
 ### 项目结构
 
 ```
-mao_nav/
+eckes_nav/
 ├── src/
 │   ├── apis/           # API 接口
 │   ├── assets/         # 静态资源（图片、样式等）
@@ -268,8 +268,8 @@ npm run lint
 
 如果你有任何问题或建议，欢迎通过以下方式联系：
 
-- 提交 [Issue](https://github.com/your-username/mao_nav/issues)
-- 发起 [Discussion](https://github.com/your-username/mao_nav/discussions)
+- 提交 [Issue](https://github.com/your-username/eckes_nav/issues)
+- 发起 [Discussion](https://github.com/your-username/eckes_nav/discussions)
 
 ---
 
