@@ -1,13 +1,55 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="public/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eckes Nav</title>
+    <title>Eckes导航 - 个人导航站</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="一个简洁、美观、功能强大的个人导航网站">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Eckes导航">
+
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/logo.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="/logo.png">
   </head>
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('✅ Service Worker 注册成功:', registration.scope)
+
+              // 检查更新
+              registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing
+                newWorker.addEventListener('statechange', () => {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    console.log('🔄 发现新版本，准备更新...')
+                    // 可以在这里提示用户刷新页面
+                  }
+                })
+              })
+            })
+            .catch(error => {
+              console.log('❌ Service Worker 注册失败:', error)
+            })
+        })
+      }
+    </script>
   </body>
 </html>
