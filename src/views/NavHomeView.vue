@@ -1717,6 +1717,8 @@ onUnmounted(() => {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .qq-qr-item {
@@ -1728,11 +1730,12 @@ onUnmounted(() => {
 
 .qq-qr-image {
   width: 100%;
-  max-width: 220px;
+  max-width: 200px;
   height: auto;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  object-fit: contain;
 }
 
 .qq-qr-image:hover {
@@ -1797,22 +1800,53 @@ onUnmounted(() => {
 
 /* 移动端响应式 */
 @media (max-width: 640px) {
+  .qq-modal-overlay {
+    padding: 10px;
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
   .qq-modal {
-    padding: 30px 20px;
+    padding: 25px 15px;
+    margin: 20px auto;
+    max-width: 100%;
+    width: calc(100% - 20px);
   }
 
   .qq-modal-title {
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 20px;
   }
 
   .qq-qr-container {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 25px;
+  }
+
+  .qq-qr-item {
+    gap: 12px;
   }
 
   .qq-qr-image {
-    max-width: 200px;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+  }
+
+  .qq-qr-label {
+    font-size: 15px;
+  }
+
+  .qq-modal-close {
+    width: 32px;
+    height: 32px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .qq-modal-close svg {
+    width: 20px;
+    height: 20px;
   }
 }
 </style>
