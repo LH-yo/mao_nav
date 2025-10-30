@@ -124,6 +124,14 @@
           />
         </div>
 
+        <!-- 全局搜索按钮 -->
+        <button class="global-search-btn" @click="showGlobalSearch = true" title="全局搜索 (Ctrl+K)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <kbd class="shortcut-hint">Ctrl+K</kbd>
+        </button>
+
         <!-- 主题切换按钮 -->
         <button class="theme-toggle-btn" @click="themeStore.toggleTheme" :title="themeStore.isDarkMode ? '切换到日间模式' : '切换到夜间模式'">
           <svg v-if="!themeStore.isDarkMode" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -231,6 +239,9 @@
 
                 <!-- 分类内容 -->
         <div v-else class="categories-container">
+          <!-- 快速访问面板 -->
+          <QuickAccessPanel :categories="categories" @record-visit="handleRecordVisit" />
+
           <section
             v-for="category in categories"
             :key="category.id"
@@ -250,6 +261,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 class="site-card"
+                @click="handleRecordVisit(site)"
               >
                 <div class="site-icon">
                   <img :src="site.icon" :alt="site.name" @error="handleImageError" />
@@ -293,6 +305,14 @@
         </div>
       </div>
     </main>
+
+    <!-- 全局搜索组件 -->
+    <GlobalSearch
+      :is-open="showGlobalSearch"
+      :categories="categories"
+      @close="toggleGlobalSearch"
+      @record-visit="handleRecordVisit"
+    />
   </div>
 </template>
 
@@ -300,6 +320,9 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useNavigation } from '@/apis/useNavigation.js'
 import { useThemeStore } from '@/stores/counter.js'
+import GlobalSearch from '@/components/GlobalSearch.vue'
+import QuickAccessPanel from '@/components/QuickAccessPanel.vue'
+import { recordVisit } from '@/utils/statistics.js'
 // 导入搜索引擎logo图片
 import googleLogo from '@/assets/goolge.png'
 import baiduLogo from '@/assets/baidu.png'
@@ -318,6 +341,7 @@ const themeStore = useThemeStore()
 const searchQuery = ref('') // 搜索查询
 const selectedEngine = ref('bing') // 选中的搜索引擎，初始值会在组件挂载后更新
 const showMobileMenu = ref(false) // 移动端菜单显示状态
+const showGlobalSearch = ref(false) // 全局搜索显示状态
 
 // 锁定功能相关
 const isLocked = ref(false) // 是否启用锁定功能
@@ -496,18 +520,41 @@ const openGitHub = () => {
   window.open('https://github.com/your-username/eckes_nav', '_blank')
 }
 
+// 切换全局搜索
+const toggleGlobalSearch = () => {
+  showGlobalSearch.value = !showGlobalSearch.value
+}
+
+// 记录网站访问
+const handleRecordVisit = (site) => {
+  recordVisit(site)
+}
+
+// 监听全局快捷键
+const handleGlobalKeydown = (e) => {
+  // Ctrl/Cmd + K 打开全局搜索
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault()
+    toggleGlobalSearch()
+  }
+}
+
 // 组件挂载时获取数据
 onMounted(async () => {
   checkLockStatus() // 检查锁定状态
   await fetchCategories()
   // 设置默认搜索引擎
   selectedEngine.value = defaultSearchEngine.value
+  // 添加全局快捷键监听
+  document.addEventListener('keydown', handleGlobalKeydown)
 })
 
 // 组件卸载时清理样式
 onUnmounted(() => {
   // 确保卸载时恢复body滚动
   document.body.style.overflow = ''
+  // 移除全局快捷键监听
+  document.removeEventListener('keydown', handleGlobalKeydown)
 })
 </script>
 
@@ -1384,6 +1431,40 @@ onUnmounted(() => {
   }
 }
 
+/* 全局搜索按钮样式 */
+.global-search-btn {
+  background: white;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 12px;
+  font-size: 14px;
+}
+
+.global-search-btn:hover {
+  background: #f9fafb;
+  border-color: #3b82f6;
+  color: #3b82f6;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.shortcut-hint {
+  padding: 3px 6px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: monospace;
+  color: #9ca3af;
+}
+
 /* 主题切换按钮样式 */
 .theme-toggle-btn {
   background: none;
@@ -1417,6 +1498,24 @@ onUnmounted(() => {
 .dark .search-header {
   background: #1e293b;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dark .global-search-btn {
+  background: #334155;
+  border-color: #475569;
+  color: #94a3b8;
+}
+
+.dark .global-search-btn:hover {
+  background: #475569;
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+
+.dark .shortcut-hint {
+  background: #1e293b;
+  border-color: #475569;
+  color: #64748b;
 }
 
 .dark .theme-toggle-btn {
