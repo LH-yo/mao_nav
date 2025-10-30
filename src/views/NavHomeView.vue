@@ -67,9 +67,8 @@
             </svg>
           </a>
           <a
-            href="https://qm.qq.com/q/"
-            target="_blank"
-            rel="noopener noreferrer"
+            @click.prevent="showQQModal = true"
+            href="#"
             class="social-link"
             title="QQ"
           >
@@ -87,7 +86,7 @@
             </svg>
           </a>
           <a
-            href="https://linux.do/"
+            href="https://linux.do/u/Eckes"
             target="_blank"
             rel="noopener noreferrer"
             class="social-link"
@@ -177,9 +176,8 @@
                 </svg>
               </a>
               <a
-                href="https://qm.qq.com/q/"
-                target="_blank"
-                rel="noopener noreferrer"
+                @click.prevent="showQQModal = true"
+                href="#"
                 class="mobile-social-link"
                 title="QQ"
               >
@@ -197,7 +195,7 @@
                 </svg>
               </a>
               <a
-                href="https://linux.do/"
+                href="https://linux.do/u/Eckes"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="mobile-social-link"
@@ -293,6 +291,33 @@
         </div>
       </div>
     </main>
+
+    <!-- QQ二维码模态框 -->
+    <Teleport to="body">
+      <Transition name="modal">
+        <div v-if="showQQModal" class="qq-modal-overlay" @click="showQQModal = false">
+          <div class="qq-modal" @click.stop>
+            <button class="qq-modal-close" @click="showQQModal = false">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+            <h2 class="qq-modal-title">扫码添加QQ</h2>
+            <div class="qq-qr-container">
+              <div class="qq-qr-item">
+                <img src="/qq-group-qr.jpg" alt="QQ群二维码" class="qq-qr-image" />
+                <p class="qq-qr-label">QQ群</p>
+              </div>
+              <div class="qq-qr-item">
+                <img src="/qq-persona1-qr.jpg" alt="个人QQ二维码" class="qq-qr-image" />
+                <p class="qq-qr-label">个人QQ</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
   </div>
 </template>
 
@@ -318,6 +343,7 @@ const themeStore = useThemeStore()
 const searchQuery = ref('') // 搜索查询
 const selectedEngine = ref('bing') // 选中的搜索引擎，初始值会在组件挂载后更新
 const showMobileMenu = ref(false) // 移动端菜单显示状态
+const showQQModal = ref(false) // QQ二维码模态框显示状态
 
 // 锁定功能相关
 const isLocked = ref(false) // 是否启用锁定功能
@@ -1616,5 +1642,177 @@ onUnmounted(() => {
 
 .dark .unlock-btn:hover:not(:disabled) {
   box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+}
+
+/* QQ二维码模态框样式 */
+.qq-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.qq-modal {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.qq-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #f3f4f6;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #6b7280;
+}
+
+.qq-modal-close:hover {
+  background: #e5e7eb;
+  color: #1f2937;
+  transform: rotate(90deg);
+}
+
+.qq-modal-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 30px 0;
+  text-align: center;
+}
+
+.qq-qr-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.qq-qr-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.qq-qr-image {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.qq-qr-image:hover {
+  transform: scale(1.05);
+}
+
+.qq-qr-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #4b5563;
+  margin: 0;
+}
+
+/* 模态框过渡动画 */
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active .qq-modal,
+.modal-leave-active .qq-modal {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.modal-enter-from .qq-modal,
+.modal-leave-to .qq-modal {
+  transform: translateY(-20px) scale(0.95);
+  opacity: 0;
+}
+
+/* 暗色模式 */
+.dark .qq-modal {
+  background: #1e293b;
+}
+
+.dark .qq-modal-title {
+  color: #f1f5f9;
+}
+
+.dark .qq-modal-close {
+  background: #334155;
+  color: #94a3b8;
+}
+
+.dark .qq-modal-close:hover {
+  background: #475569;
+  color: #f1f5f9;
+}
+
+.dark .qq-qr-label {
+  color: #cbd5e1;
+}
+
+.dark .qq-qr-image {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* 移动端响应式 */
+@media (max-width: 640px) {
+  .qq-modal {
+    padding: 30px 20px;
+  }
+
+  .qq-modal-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .qq-qr-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .qq-qr-image {
+    max-width: 200px;
+  }
 }
 </style>
