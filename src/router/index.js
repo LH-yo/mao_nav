@@ -27,6 +27,14 @@ const router = createRouter({
         title: '环境变量测试 - Eckes导航'
       }
     },
+    {
+      path: '/qq-demo',
+      name: 'qq-demo',
+      component: () => import('../components/QQModalDemo.vue'),
+      meta: {
+        title: 'QQ二维码方案预览 - Eckes导航'
+      }
+    },
   ],
 })
 
