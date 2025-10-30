@@ -292,27 +292,45 @@
       </div>
     </main>
 
-    <!-- QQ二维码模态框 -->
+    <!-- QQ二维码模态框 - 方案4：标签页切换式 -->
     <Teleport to="body">
       <Transition name="modal">
         <div v-if="showQQModal" class="qq-modal-overlay" @click="showQQModal = false">
           <div class="qq-modal" @click.stop>
-            <button class="qq-modal-close" @click="showQQModal = false">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </button>
-            <h2 class="qq-modal-title">扫码添加QQ</h2>
-            <div class="qq-qr-container">
-              <div class="qq-qr-item">
-                <img src="/qq-group-qr.jpg" alt="QQ群二维码" class="qq-qr-image" />
-                <p class="qq-qr-label">QQ群</p>
-              </div>
-              <div class="qq-qr-item">
-                <img src="/qq-persona1-qr.jpg" alt="个人QQ二维码" class="qq-qr-image" />
-                <p class="qq-qr-label">个人QQ</p>
-              </div>
+            <button class="qq-modal-close" @click="showQQModal = false">×</button>
+            <div class="qq-tabs">
+              <button
+                @click="activeQQTab = 'group'"
+                :class="{ active: activeQQTab === 'group' }"
+                class="qq-tab-btn"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                </svg>
+                QQ群
+              </button>
+              <button
+                @click="activeQQTab = 'personal'"
+                :class="{ active: activeQQTab === 'personal' }"
+                class="qq-tab-btn"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+                个人QQ
+              </button>
+            </div>
+            <div class="qq-content">
+              <Transition name="slide" mode="out-in">
+                <div :key="activeQQTab" class="qq-qr-wrapper">
+                  <img
+                    :src="activeQQTab === 'group' ? '/qq-group-qr.jpg' : '/qq-persona1-qr.jpg'"
+                    alt="QR Code"
+                    class="qq-qr-image"
+                  />
+                  <p class="qq-qr-desc">{{ activeQQTab === 'group' ? '扫码加入QQ群' : '扫码添加个人QQ' }}</p>
+                </div>
+              </Transition>
             </div>
           </div>
         </div>
@@ -344,6 +362,7 @@ const searchQuery = ref('') // 搜索查询
 const selectedEngine = ref('bing') // 选中的搜索引擎，初始值会在组件挂载后更新
 const showMobileMenu = ref(false) // 移动端菜单显示状态
 const showQQModal = ref(false) // QQ二维码模态框显示状态
+const activeQQTab = ref('group') // QQ二维码当前标签页（group 或 personal）
 
 // 锁定功能相关
 const isLocked = ref(false) // 是否启用锁定功能
@@ -1644,14 +1663,14 @@ onUnmounted(() => {
   box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
 }
 
-/* QQ二维码模态框样式 */
+/* QQ二维码模态框样式 - 方案4：标签页切换式 */
 .qq-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1662,12 +1681,12 @@ onUnmounted(() => {
 
 .qq-modal {
   background: white;
-  border-radius: 20px;
-  padding: 40px;
-  max-width: 600px;
+  border-radius: 16px;
+  max-width: 420px;
   width: 100%;
-  position: relative;
+  overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
   animation: modalSlideIn 0.3s ease-out;
 }
 
@@ -1684,69 +1703,103 @@ onUnmounted(() => {
 
 .qq-modal-close {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  background: #f3f4f6;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.05);
   border: none;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.2s ease;
+  color: #6b7280;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: #6b7280;
 }
 
 .qq-modal-close:hover {
-  background: #e5e7eb;
+  background: rgba(0, 0, 0, 0.1);
   color: #1f2937;
   transform: rotate(90deg);
 }
 
-.qq-modal-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #1f2937;
-  margin: 0 0 30px 0;
-  text-align: center;
-}
-
-.qq-qr-container {
+.qq-tabs {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
-  max-width: 500px;
-  margin: 0 auto;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.qq-qr-item {
+.qq-tab-btn {
+  padding: 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 15px;
+  justify-content: center;
+  gap: 8px;
+  color: #6b7280;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.qq-tab-btn:hover {
+  background: rgba(102, 126, 234, 0.05);
+  color: #667eea;
+}
+
+.qq-tab-btn.active {
+  background: white;
+  border-bottom-color: #667eea;
+  color: #667eea;
+}
+
+.qq-content {
+  padding: 35px 30px;
+}
+
+.qq-qr-wrapper {
+  text-align: center;
 }
 
 .qq-qr-image {
   width: 100%;
-  max-width: 200px;
+  max-width: 300px;
   height: auto;
   border-radius: 12px;
+  margin: 0 auto 20px;
+  display: block;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  object-fit: contain;
 }
 
-.qq-qr-image:hover {
-  transform: scale(1.05);
-}
-
-.qq-qr-label {
-  font-size: 16px;
-  font-weight: 500;
-  color: #4b5563;
+.qq-qr-desc {
+  color: #6b7280;
+  font-size: 15px;
   margin: 0;
+  font-weight: 500;
+}
+
+/* 标签页切换动画 */
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-enter-from {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
 }
 
 /* 模态框过渡动画 */
@@ -1776,77 +1829,77 @@ onUnmounted(() => {
   background: #1e293b;
 }
 
-.dark .qq-modal-title {
-  color: #f1f5f9;
+.dark .qq-tabs {
+  background: #0f172a;
+  border-bottom-color: #334155;
+}
+
+.dark .qq-tab-btn {
+  color: #94a3b8;
+}
+
+.dark .qq-tab-btn:hover {
+  background: rgba(102, 126, 234, 0.1);
+  color: #a5b4fc;
+}
+
+.dark .qq-tab-btn.active {
+  background: #1e293b;
+  border-bottom-color: #667eea;
+  color: #a5b4fc;
 }
 
 .dark .qq-modal-close {
-  background: #334155;
+  background: rgba(255, 255, 255, 0.05);
   color: #94a3b8;
 }
 
 .dark .qq-modal-close:hover {
-  background: #475569;
+  background: rgba(255, 255, 255, 0.1);
   color: #f1f5f9;
 }
 
-.dark .qq-qr-label {
+.dark .qq-qr-desc {
   color: #cbd5e1;
 }
 
 .dark .qq-qr-image {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 /* 移动端响应式 */
 @media (max-width: 640px) {
-  .qq-modal-overlay {
-    padding: 10px;
-    align-items: flex-start;
-    overflow-y: auto;
-  }
-
   .qq-modal {
-    padding: 25px 15px;
-    margin: 20px auto;
     max-width: 100%;
     width: calc(100% - 20px);
+    margin: 0 10px;
   }
 
-  .qq-modal-title {
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
-
-  .qq-qr-container {
-    grid-template-columns: 1fr;
-    gap: 25px;
-  }
-
-  .qq-qr-item {
-    gap: 12px;
+  .qq-content {
+    padding: 25px 20px;
   }
 
   .qq-qr-image {
     max-width: 100%;
-    width: 100%;
-    height: auto;
   }
 
-  .qq-qr-label {
-    font-size: 15px;
+  .qq-tab-btn {
+    padding: 14px 12px;
+    font-size: 14px;
+    gap: 6px;
+  }
+
+  .qq-tab-btn svg {
+    width: 14px;
+    height: 14px;
   }
 
   .qq-modal-close {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     top: 10px;
     right: 10px;
-  }
-
-  .qq-modal-close svg {
-    width: 20px;
-    height: 20px;
+    font-size: 18px;
   }
 }
 </style>
