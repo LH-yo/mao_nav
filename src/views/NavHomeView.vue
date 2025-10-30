@@ -161,6 +161,54 @@
               <span class="category-name">{{ category.name }}</span>
             </li>
           </ul>
+
+          <!-- 移动端社交媒体图标 -->
+          <div class="mobile-social-footer">
+            <div class="social-links">
+              <a
+                href="https://space.bilibili.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                title="哔哩哔哩"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/>
+                </svg>
+              </a>
+              <a
+                href="https://qm.qq.com/q/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                title="QQ"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C9.243 2 7 4.243 7 7v3.586c-1.161.414-2 1.514-2 2.828v1.172c0 1.314.839 2.414 2 2.828V19c0 1.657 1.343 3 3 3h4c1.657 0 3-1.343 3-3v-1.586c1.161-.414 2-1.514 2-2.828v-1.172c0-1.314-.839-2.414-2-2.828V7c0-2.757-2.243-5-5-5zm0 2c1.654 0 3 1.346 3 3v3h-6V7c0-1.654 1.346-3 3-3zm-2 13c-.552 0-1-.448-1-1s.448-1 1-1 1 .448 1 1-.448 1-1 1zm4 0c-.552 0-1-.448-1-1s.448-1 1-1 1 .448 1 1-.448 1-1 1z"/>
+                </svg>
+              </a>
+              <a
+                href="https://www.douyin.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                title="抖音"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                </svg>
+              </a>
+              <a
+                href="mailto:your-email@example.com"
+                class="social-link"
+                title="邮箱"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
         </div>
 
         <!-- 移动端菜单遮罩 -->
@@ -912,7 +960,50 @@ onUnmounted(() => {
   color: #2c3e50;
 }
 
+/* 移动端社交媒体底部 */
+.mobile-social-footer {
+  margin-top: auto;
+  padding: 20px;
+  border-top: 1px solid #e9ecef;
+  background: #f8f9fa;
+}
 
+.mobile-social-footer .social-links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.mobile-social-footer .social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background: white;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-social-footer .social-link:hover {
+  background: #2c3e50;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-social-footer .social-link svg {
+  transition: transform 0.3s ease;
+}
+
+.mobile-social-footer .social-link:hover svg {
+  transform: scale(1.15);
+}
 
 /* 移动端菜单遮罩 */
 .mobile-menu-overlay {
@@ -1426,6 +1517,23 @@ onUnmounted(() => {
 
 .dark .mobile-category-item .category-name {
   color: #e2e8f0;
+}
+
+.dark .mobile-social-footer {
+  background: #0f172a;
+  border-top: 1px solid #374151;
+}
+
+.dark .mobile-social-footer .social-link {
+  background: #1e293b;
+  color: #94a3b8;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dark .mobile-social-footer .social-link:hover {
+  background: #3b82f6;
+  color: white;
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
 }
 
 .dark .page-footer {
