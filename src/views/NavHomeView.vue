@@ -853,24 +853,23 @@ onUnmounted(() => {
 }
 
 .search-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 25px 30px;
-  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  background: white;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
   z-index: 100;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
   justify-content: space-between;
-  backdrop-filter: blur(10px);
 }
 
 /* 顶部工具栏 */
 .header-toolbar {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 /* 顶部联系方式图标 */
@@ -884,40 +883,35 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  color: rgba(255, 255, 255, 0.9);
+  width: 36px;
+  height: 36px;
+  color: #64748b;
   text-decoration: none;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #f8f9fa;
+  border-radius: 8px;
+  transition: all 0.3s ease;
   cursor: pointer;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .header-social-link:hover {
-  background: rgba(255, 255, 255, 0.25);
-  color: white;
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background: #e9ecef;
+  color: #2c3e50;
+  transform: translateY(-2px);
 }
 
 .header-social-link:active {
-  transform: translateY(-1px) scale(1.02);
+  transform: translateY(0);
 }
 
 .search-container {
   display: flex;
-  max-width: 650px;
+  max-width: 600px;
   margin: 0 auto;
   gap: 0;
-  border-radius: 16px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   flex: 1;
-  background: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 /* 搜索框响应式已在下方统一处理 */
@@ -926,23 +920,22 @@ onUnmounted(() => {
   position: relative;
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  border-right: 2px solid rgba(102, 126, 234, 0.1);
-  transition: all 0.3s ease;
+  background: #f8f9fa;
+  border-right: 1px solid #e9ecef;
+  transition: background-color 0.2s ease;
 }
 
 .search-engine-selector:hover {
-  background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+  background: #e9ecef;
 }
 
 .engine-logo {
-  width: 28px;
-  height: 28px;
-  margin: 10px 12px;
+  width: 24px;
+  height: 24px;
+  margin: 8px;
   object-fit: contain;
   pointer-events: none;
-  border-radius: 6px;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  border-radius: 4px;
 }
 
 .engine-select {
@@ -961,17 +954,14 @@ onUnmounted(() => {
 .search-input {
   flex: 1;
   border: none;
-  padding: 14px 20px;
+  padding: 12px 16px;
   font-size: 16px;
   outline: none;
   background: white;
-  color: #2c3e50;
-  font-weight: 400;
 }
 
 .search-input::placeholder {
   color: #95a5a6;
-  font-weight: 300;
 }
 
 /* 移动端内嵌社交媒体图标（方案2） */
@@ -1008,26 +998,17 @@ onUnmounted(() => {
 /* 移动端菜单按钮 */
 .mobile-menu-btn {
   display: none;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.9);
+  background: none;
+  border: none;
+  color: #2c3e50;
   cursor: pointer;
-  padding: 10px;
-  border-radius: 12px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(10px);
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
 }
 
 .mobile-menu-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
-  color: white;
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: #f8f9fa;
 }
 
 /* 移动端菜单 */
@@ -2011,26 +1992,22 @@ onUnmounted(() => {
 
 /* 主题切换按钮样式 */
 .theme-toggle-btn {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.9);
+  background: none;
+  border: none;
+  color: #2c3e50;
   cursor: pointer;
-  padding: 10px;
-  border-radius: 12px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(10px);
-  width: 40px;
-  height: 40px;
+  margin-right: 10px;
 }
 
 .theme-toggle-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
-  color: white;
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background: #f8f9fa;
+  transform: scale(1.1);
 }
 
 /* 暗色模式样式 */
@@ -2044,32 +2021,26 @@ onUnmounted(() => {
 }
 
 .dark .search-header {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  background: #1e293b;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .dark .header-social-link {
-  background: rgba(255, 255, 255, 0.08);
+  background: #334155;
   color: #94a3b8;
-  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .dark .header-social-link:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #60a5fa;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  background: #475569;
+  color: #e2e8f0;
 }
 
 .dark .theme-toggle-btn {
-  background: rgba(255, 255, 255, 0.08);
-  color: #94a3b8;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
 }
 
 .dark .theme-toggle-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #60a5fa;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .dark .inline-social-link {
@@ -2083,29 +2054,24 @@ onUnmounted(() => {
 }
 
 .dark .mobile-menu-btn {
-  background: rgba(255, 255, 255, 0.08);
-  color: #94a3b8;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
 }
 
 .dark .mobile-menu-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #60a5fa;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .dark .search-container {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .dark .search-engine-selector {
-  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
-  border-right: 2px solid rgba(96, 165, 250, 0.2);
+  background: #374151;
+  border-right: 1px solid #4b5563;
 }
 
 .dark .search-engine-selector:hover {
-  background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+  background: #4b5563;
 }
 
 .dark .search-input {
