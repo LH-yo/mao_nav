@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import NavHomeView from '../views/NavHomeView.vue'
 import TestView from '../views/TestView.vue'
+import MobileSocialDemo from '../components/MobileSocialDemo.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,6 +26,14 @@ const router = createRouter({
       component: TestView,
       meta: {
         title: '环境变量测试 - Eckes导航'
+      }
+    },
+    {
+      path: '/mobile-social-demo',
+      name: 'mobile-social-demo',
+      component: MobileSocialDemo,
+      meta: {
+        title: '移动端联系方式方案演示 - Eckes导航'
       }
     },
   ],
