@@ -1548,9 +1548,20 @@ onUnmounted(() => {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
 
-  /* 平板隐藏顶部联系方式 */
+  /* 平板保持显示顶部联系方式 */
   .header-social-links {
-    display: none;
+    display: flex;
+    gap: 6px;
+  }
+
+  .header-social-link {
+    width: 32px;
+    height: 32px;
+  }
+
+  .header-social-link svg {
+    width: 16px;
+    height: 16px;
   }
 
   .content-area {
@@ -1563,7 +1574,7 @@ onUnmounted(() => {
   }
 
   .inline-social {
-    display: flex; /* 在移动端显示内嵌社交图标 */
+    display: none; /* 平板上隐藏内嵌社交图标，使用顶部的 */
   }
 
   .mobile-menu-btn {
@@ -1633,13 +1644,24 @@ onUnmounted(() => {
     gap: 10px;
   }
 
-  /* 移动端隐藏顶部联系方式 */
+  /* 移动端显示紧凑的顶部联系方式 */
   .header-social-links {
-    display: none;
+    display: flex;
+    gap: 4px;
+  }
+
+  .header-social-link {
+    width: 30px;
+    height: 30px;
+  }
+
+  .header-social-link svg {
+    width: 14px;
+    height: 14px;
   }
 
   .header-toolbar {
-    gap: 8px;
+    gap: 6px;
   }
 
   .content-area {
@@ -1652,12 +1674,7 @@ onUnmounted(() => {
   }
 
   .inline-social {
-    display: flex; /* 在移动端显示内嵌社交图标 */
-  }
-
-  .inline-social-link {
-    width: 30px;
-    height: 30px;
+    display: none; /* 移动端隐藏内嵌社交图标，使用顶部的 */
   }
 
   .mobile-menu-btn {
