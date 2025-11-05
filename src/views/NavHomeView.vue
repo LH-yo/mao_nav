@@ -133,14 +133,8 @@
           </button>
 
           <!-- 礼物按钮 -->
-          <router-link to="/gift" class="gift-btn" title="神秘礼物">
-            <svg class="gift-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 12V22H4V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M22 7H2V12H22V7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M12 22V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M12 7H7.5C6.83696 7 6.20107 6.73661 5.73223 6.26777C5.26339 5.79893 5 5.16304 5 4.5C5 3.83696 5.26339 3.20107 5.73223 2.73223C6.20107 2.26339 6.83696 2 7.5 2C11 2 12 7 12 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M12 7H16.5C17.163 7 17.7989 6.73661 18.2678 6.26777C18.7366 5.79893 19 5.16304 19 4.5C19 3.83696 18.7366 3.20107 18.2678 2.73223C17.7989 2.26339 17.163 2 16.5 2C13 2 12 7 12 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+          <router-link to="/gift" class="gift-btn" title="神秘礼物 🎁">
+            <span class="gift-icon">🎁</span>
           </router-link>
 
           <!-- 主题切换按钮 -->
@@ -201,13 +195,7 @@
           <!-- 移动端礼物按钮 -->
           <div class="mobile-gift-section">
             <router-link to="/gift" class="mobile-gift-btn" @click="closeMobileMenu">
-              <svg class="gift-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 12V22H4V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M22 7H2V12H22V7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12 22V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12 7H7.5C6.83696 7 6.20107 6.73661 5.73223 6.26777C5.26339 5.79893 5 5.16304 5 4.5C5 3.83696 5.26339 3.20107 5.73223 2.73223C6.20107 2.26339 6.83696 2 7.5 2C11 2 12 7 12 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12 7H16.5C17.163 7 17.7989 6.73661 18.2678 6.26777C18.7366 5.79893 19 5.16304 19 4.5C19 3.83696 18.7366 3.20107 18.2678 2.73223C17.7989 2.26339 17.163 2 16.5 2C13 2 12 7 12 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <span class="gift-icon">🎁</span>
               <span class="gift-text">神秘礼物</span>
             </router-link>
           </div>
@@ -1311,8 +1299,8 @@ onUnmounted(() => {
 }
 
 .mobile-gift-btn .gift-icon {
-  color: white;
-  flex-shrink: 0;
+  font-size: 24px;
+  animation: giftShake 2s infinite;
 }
 
 .mobile-gift-btn .gift-text {
@@ -2270,13 +2258,15 @@ onUnmounted(() => {
 }
 
 .gift-icon {
+  font-size: 20px;
+  animation: giftShake 2s infinite;
   display: block;
-  color: white;
-  transition: transform 0.3s ease;
 }
 
-.gift-btn:hover .gift-icon {
-  transform: scale(1.1) rotate(5deg);
+@keyframes giftShake {
+  0%, 100% { transform: rotate(0deg); }
+  10%, 30%, 50%, 70%, 90% { transform: rotate(-10deg); }
+  20%, 40%, 60%, 80% { transform: rotate(10deg); }
 }
 
 /* 主题切换按钮样式 */
