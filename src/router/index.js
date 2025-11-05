@@ -3,6 +3,7 @@ import NavHomeView from '../views/NavHomeView.vue'
 import TestView from '../views/TestView.vue'
 import MobileSocialDemo from '../components/MobileSocialDemo.vue'
 import SidebarDemo from '../components/SidebarDemo.vue'
+import NotesGiftView from '../views/NotesGiftView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,6 +44,14 @@ const router = createRouter({
       component: SidebarDemo,
       meta: {
         title: '侧边栏升级方案演示 - Eckes导航'
+      }
+    },
+    {
+      path: '/gift',
+      name: 'notes-gift',
+      component: NotesGiftView,
+      meta: {
+        title: '神秘礼物 - Eckes导航'
       }
     },
   ],

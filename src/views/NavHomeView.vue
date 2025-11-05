@@ -125,50 +125,17 @@
 
         <!-- 顶部工具栏 -->
         <div class="header-toolbar">
-          <!-- 联系方式图标 -->
-          <div class="header-social-links">
-            <a
-              href="https://space.bilibili.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="header-social-link"
-              title="哔哩哔哩"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/>
-              </svg>
-            </a>
-            <a
-              @click.prevent="showQQModal = true"
-              href="#"
-              class="header-social-link"
-              title="QQ"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M21.395 15.035a39.548 39.548 0 0 0-.803-2.264l-1.079-2.695c.001-.032.014-.562.014-.836C19.526 4.632 17.351 0 12 0S4.474 4.632 4.474 9.241c0 .274.013.804.014.836l-1.08 2.695a38.97 38.97 0 0 0-.802 2.264c-1.021 3.283-.69 4.643-.438 4.673.54.065 2.103-2.472 2.103-2.472 0 1.469.756 3.387 2.394 4.771-.612.188-1.363.479-1.845.835-.434.32-.379.646-.301.778.343.578 5.883.369 7.482.369s7.138.209 7.482-.369c.078-.132.132-.458-.301-.778-.483-.356-1.233-.646-1.846-.835 1.637-1.384 2.393-3.302 2.393-4.771 0 0 1.563 2.537 2.103 2.472.251-.03.581-1.39-.438-4.673z"/>
-              </svg>
-            </a>
-            <a
-              href="mailto:2490918758@qq.com"
-              class="header-social-link"
-              title="QQ邮箱"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-              </svg>
-            </a>
-            <a
-              href="https://linux.do/u/Eckes"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="header-social-link"
-              title="Linux.do"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.84-.41 1.684-.287 2.489.123.805.487 1.544 1.04 2.138l-.88.88c-.39.39-.39 1.024 0 1.414.195.195.451.293.707.293s.512-.098.707-.293l.88-.88c.594.553 1.333.917 2.138 1.04.805.123 1.649-.009 2.489-.287 1.771-.589 3.47-1.831 4.521-2.716 1.067-.75 1.928-.974 3.02-1.05 1.491-.065 5.965 1.056 6.298-3.17.013-.165.021-.325.021-.48 0-6.627-5.373-12-12-12zm-.21 2.5c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm-3.5 1.5c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm7 0c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm-10.5 2c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm14 0c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm-7 1.5c1.933 0 3.5 1.567 3.5 3.5s-1.567 3.5-3.5 3.5-3.5-1.567-3.5-3.5 1.567-3.5 3.5-3.5zm-8.5 2c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm17 0c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm-12.5 3c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm8 0c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm-6.5 2c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm5 0c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858z"/>
-              </svg>
-            </a>
-          </div>
+          <!-- 联系我按钮 -->
+          <button class="contact-btn" @click="showContactPopup = true" title="联系我">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+          </button>
+
+          <!-- 礼物按钮 -->
+          <router-link to="/gift" class="gift-btn" title="神秘礼物 🎁">
+            <span class="gift-icon">🎁</span>
+          </router-link>
 
           <!-- 主题切换按钮 -->
           <button class="theme-toggle-btn" @click="themeStore.toggleTheme" :title="themeStore.isDarkMode ? '切换到日间模式' : '切换到夜间模式'">
@@ -224,6 +191,14 @@
               <span class="category-name">{{ category.name }}</span>
             </li>
           </ul>
+
+          <!-- 移动端礼物按钮 -->
+          <div class="mobile-gift-section">
+            <router-link to="/gift" class="mobile-gift-btn" @click="closeMobileMenu">
+              <span class="gift-icon">🎁</span>
+              <span class="gift-text">神秘礼物</span>
+            </router-link>
+          </div>
 
           <!-- 移动端社交媒体图标 -->
           <div class="mobile-social-footer">
@@ -358,6 +333,68 @@
 
     <!-- QQ二维码模态框 - 方案4：标签页切换式 -->
     <Teleport to="body">
+      <!-- 联系方式弹出层 -->
+      <Transition name="modal">
+        <div v-if="showContactPopup" class="contact-popup-overlay" @click="showContactPopup = false">
+          <div class="contact-popup" @click.stop>
+            <button class="contact-popup-close" @click="showContactPopup = false">×</button>
+            <h3 class="contact-popup-title">联系我</h3>
+            <div class="contact-links-grid">
+              <a
+                href="https://space.bilibili.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="contact-link-item"
+              >
+                <div class="contact-link-icon bilibili">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/>
+                  </svg>
+                </div>
+                <span class="contact-link-text">哔哩哔哩</span>
+              </a>
+              <a
+                @click.prevent="showContactPopup = false; showQQModal = true"
+                href="#"
+                class="contact-link-item"
+              >
+                <div class="contact-link-icon qq">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M21.395 15.035a39.548 39.548 0 0 0-.803-2.264l-1.079-2.695c.001-.032.014-.562.014-.836C19.526 4.632 17.351 0 12 0S4.474 4.632 4.474 9.241c0 .274.013.804.014.836l-1.08 2.695a38.97 38.97 0 0 0-.802 2.264c-1.021 3.283-.69 4.643-.438 4.673.54.065 2.103-2.472 2.103-2.472 0 1.469.756 3.387 2.394 4.771-.612.188-1.363.479-1.845.835-.434.32-.379.646-.301.778.343.578 5.883.369 7.482.369s7.138.209 7.482-.369c.078-.132.132-.458-.301-.778-.483-.356-1.233-.646-1.846-.835 1.637-1.384 2.393-3.302 2.393-4.771 0 0 1.563 2.537 2.103 2.472.251-.03.581-1.39-.438-4.673z"/>
+                  </svg>
+                </div>
+                <span class="contact-link-text">QQ</span>
+              </a>
+              <a
+                href="mailto:2490918758@qq.com"
+                class="contact-link-item"
+              >
+                <div class="contact-link-icon email">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                  </svg>
+                </div>
+                <span class="contact-link-text">QQ邮箱</span>
+              </a>
+              <a
+                href="https://linux.do/u/Eckes"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="contact-link-item"
+              >
+                <div class="contact-link-icon linux">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.84-.41 1.684-.287 2.489.123.805.487 1.544 1.04 2.138l-.88.88c-.39.39-.39 1.024 0 1.414.195.195.451.293.707.293s.512-.098.707-.293l.88-.88c.594.553 1.333.917 2.138 1.04.805.123 1.649-.009 2.489-.287 1.771-.589 3.47-1.831 4.521-2.716 1.067-.75 1.928-.974 3.02-1.05 1.491-.065 5.965 1.056 6.298-3.17.013-.165.021-.325.021-.48 0-6.627-5.373-12-12-12zm-.21 2.5c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm-3.5 1.5c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm7 0c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm-10.5 2c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm14 0c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm-7 1.5c1.933 0 3.5 1.567 3.5 3.5s-1.567 3.5-3.5 3.5-3.5-1.567-3.5-3.5 1.567-3.5 3.5-3.5zm-8.5 2c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm17 0c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm-12.5 3c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm8 0c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm-6.5 2c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm5 0c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858z"/>
+                  </svg>
+                </div>
+                <span class="contact-link-text">Linux.do</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </Transition>
+
+      <!-- QQ二维码弹窗 -->
       <Transition name="modal">
         <div v-if="showQQModal" class="qq-modal-overlay" @click="showQQModal = false">
           <div class="qq-modal" @click.stop>
@@ -423,6 +460,7 @@ const themeStore = useThemeStore()
 const searchQuery = ref('') // 搜索查询
 const selectedEngine = ref('bing') // 选中的搜索引擎，初始值会在组件挂载后更新
 const showMobileMenu = ref(false) // 移动端菜单显示状态
+const showContactPopup = ref(false) // 联系方式弹出层显示状态
 const showQQModal = ref(false) // QQ二维码模态框显示状态
 const activeQQTab = ref('group') // QQ二维码当前标签页（group 或 personal）
 
@@ -869,38 +907,163 @@ onUnmounted(() => {
 .header-toolbar {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
-/* 顶部联系方式图标 */
-.header-social-links {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.header-social-link {
+/* 联系我按钮 */
+.contact-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   color: #64748b;
-  text-decoration: none;
   background: #f8f9fa;
+  border: none;
   border-radius: 8px;
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
-.header-social-link:hover {
+.contact-btn:hover {
   background: #e9ecef;
   color: #2c3e50;
   transform: translateY(-2px);
 }
 
-.header-social-link:active {
+.contact-btn:active {
   transform: translateY(0);
+}
+
+/* 联系方式弹出层 */
+.contact-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(4px);
+}
+
+.contact-popup {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+  animation: popupSlideIn 0.3s ease-out;
+}
+
+@keyframes popupSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.contact-popup-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #94a3b8;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.contact-popup-close:hover {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.contact-popup-title {
+  margin: 0 0 25px 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #1e293b;
+  text-align: center;
+}
+
+.contact-links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.contact-link-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 15px;
+  background: #f8fafc;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.contact-link-item:hover {
+  background: #e2e8f0;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contact-link-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.contact-link-icon.bilibili {
+  background: linear-gradient(135deg, #00a1d6 0%, #00b5e5 100%);
+}
+
+.contact-link-icon.qq {
+  background: linear-gradient(135deg, #12b7f5 0%, #1296db 100%);
+}
+
+.contact-link-icon.email {
+  background: linear-gradient(135deg, #ea4335 0%, #d33b2c 100%);
+}
+
+.contact-link-icon.linux {
+  background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+}
+
+.contact-link-item:hover .contact-link-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.contact-link-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+  text-align: center;
 }
 
 .search-container {
@@ -1102,6 +1265,46 @@ onUnmounted(() => {
   font-size: 16px;
   font-weight: 500;
   color: #2c3e50;
+}
+
+/* 移动端礼物按钮区域 */
+.mobile-gift-section {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.mobile-gift-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+}
+
+.mobile-gift-btn:active {
+  transform: scale(0.98);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.mobile-gift-btn .gift-icon {
+  font-size: 24px;
+  animation: giftShake 2s infinite;
+}
+
+.mobile-gift-btn .gift-text {
+  letter-spacing: 1px;
 }
 
 /* 移动端社交媒体底部 */
@@ -1471,12 +1674,12 @@ onUnmounted(() => {
     margin-left: 220px;
   }
 
-  .header-social-link {
+  .contact-btn {
     width: 34px;
     height: 34px;
   }
 
-  .header-social-link svg {
+  .contact-btn svg {
     width: 16px;
     height: 16px;
   }
@@ -1548,18 +1751,13 @@ onUnmounted(() => {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
 
-  /* 平板保持显示顶部联系方式 */
-  .header-social-links {
-    display: flex;
-    gap: 6px;
+  /* 平板联系按钮样式 */
+  .contact-btn {
+    width: 34px;
+    height: 34px;
   }
 
-  .header-social-link {
-    width: 32px;
-    height: 32px;
-  }
-
-  .header-social-link svg {
+  .contact-btn svg {
     width: 16px;
     height: 16px;
   }
@@ -1644,24 +1842,47 @@ onUnmounted(() => {
     gap: 10px;
   }
 
-  /* 移动端显示紧凑的顶部联系方式 */
-  .header-social-links {
-    display: flex;
-    gap: 4px;
+  /* 移动端联系按钮样式 */
+  .contact-btn {
+    width: 32px;
+    height: 32px;
   }
 
-  .header-social-link {
-    width: 30px;
-    height: 30px;
-  }
-
-  .header-social-link svg {
-    width: 14px;
-    height: 14px;
+  .contact-btn svg {
+    width: 15px;
+    height: 15px;
   }
 
   .header-toolbar {
     gap: 6px;
+  }
+
+  /* 移动端弹出层优化 */
+  .contact-popup {
+    padding: 25px 20px;
+    max-width: 340px;
+  }
+
+  .contact-popup-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .contact-links-grid {
+    gap: 12px;
+  }
+
+  .contact-link-item {
+    padding: 18px 12px;
+  }
+
+  .contact-link-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .contact-link-text {
+    font-size: 13px;
   }
 
   .content-area {
@@ -1990,6 +2211,64 @@ onUnmounted(() => {
   }
 }
 
+/* 礼物按钮样式 - 玻璃透明效果 */
+.gift-btn {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.gift-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.gift-btn:hover::before {
+  width: 100px;
+  height: 100px;
+}
+
+.gift-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.gift-icon {
+  font-size: 20px;
+  animation: giftShake 2s infinite;
+  display: block;
+}
+
+@keyframes giftShake {
+  0%, 100% { transform: rotate(0deg); }
+  10%, 30%, 50%, 70%, 90% { transform: rotate(-10deg); }
+  20%, 40%, 60%, 80% { transform: rotate(10deg); }
+}
+
 /* 主题切换按钮样式 */
 .theme-toggle-btn {
   background: none;
@@ -2025,14 +2304,52 @@ onUnmounted(() => {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-.dark .header-social-link {
+.dark .contact-btn {
   background: #334155;
   color: #94a3b8;
 }
 
-.dark .header-social-link:hover {
+.dark .contact-btn:hover {
   background: #475569;
   color: #e2e8f0;
+}
+
+.dark .contact-popup {
+  background: #1e293b;
+}
+
+.dark .contact-popup-title {
+  color: #f1f5f9;
+}
+
+.dark .contact-popup-close {
+  color: #94a3b8;
+}
+
+.dark .contact-popup-close:hover {
+  background: #334155;
+  color: #e2e8f0;
+}
+
+.dark .contact-link-item {
+  background: #0f172a;
+}
+
+.dark .contact-link-item:hover {
+  background: #1e293b;
+}
+
+.dark .contact-link-text {
+  color: #cbd5e1;
+}
+
+.dark .gift-btn {
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);
+}
+
+.dark .gift-btn:hover {
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.6);
 }
 
 .dark .theme-toggle-btn {
@@ -2143,6 +2460,15 @@ onUnmounted(() => {
 
 .dark .mobile-category-item .category-name {
   color: #e2e8f0;
+}
+
+.dark .mobile-gift-section {
+  border-bottom: 1px solid #334155;
+}
+
+.dark .mobile-gift-btn {
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
 }
 
 .dark .mobile-social-footer {
