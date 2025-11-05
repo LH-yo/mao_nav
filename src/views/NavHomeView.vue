@@ -28,55 +28,60 @@
 
   <!-- 正常导航界面 -->
   <div v-else class="nav-home">
-    <!-- 双栏式侧边栏 -->
-    <aside class="sidebar dual-sidebar">
-      <!-- 主栏：图标导航 -->
-      <div class="dual-main">
-        <div class="dual-logo">
-          <img src="/logo.png" alt="logo" class="logo-small" />
-        </div>
+    <!-- 左侧边栏 -->
+    <aside class="sidebar">
+      <!-- Logo区域 -->
+      <div class="logo-section">
+        <img src="/logo.png" alt="logo" class="logo" />
+        <h1 class="site-title">{{ title || 'Eckes导航' }}</h1>
+      </div>
 
-        <div class="dual-categories">
-          <div
+      <!-- 分类导航 -->
+      <nav class="category-nav">
+        <h2 class="nav-title">分类导航</h2>
+                <ul class="category-list">
+          <li
             v-for="category in categories"
             :key="category.id"
-            class="dual-main-item"
-            :class="{ active: selectedCategory === category.id }"
-            @click="selectCategory(category.id)"
-            :title="category.name"
+            class="category-item"
+            @click="scrollToCategory(category.id)"
           >
-            <span class="dual-icon">{{ category.icon }}</span>
-          </div>
-        </div>
+            <span class="category-icon">{{ category.icon }}</span>
+            <span class="category-name">{{ category.name }}</span>
+          </li>
+        </ul>
+      </nav>
 
-        <div class="dual-social">
+      <!-- 左侧边栏底部信息 -->
+      <div class="sidebar-footer">
+        <div class="social-links">
           <a
             href="https://space.bilibili.com/"
             target="_blank"
             rel="noopener noreferrer"
-            class="dual-social-link"
+            class="social-link"
             title="哔哩哔哩"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/>
             </svg>
           </a>
           <a
             @click.prevent="showQQModal = true"
             href="#"
-            class="dual-social-link"
+            class="social-link"
             title="QQ"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M21.395 15.035a39.548 39.548 0 0 0-.803-2.264l-1.079-2.695c.001-.032.014-.562.014-.836C19.526 4.632 17.351 0 12 0S4.474 4.632 4.474 9.241c0 .274.013.804.014.836l-1.08 2.695a38.97 38.97 0 0 0-.802 2.264c-1.021 3.283-.69 4.643-.438 4.673.54.065 2.103-2.472 2.103-2.472 0 1.469.756 3.387 2.394 4.771-.612.188-1.363.479-1.845.835-.434.32-.379.646-.301.778.343.578 5.883.369 7.482.369s7.138.209 7.482-.369c.078-.132.132-.458-.301-.778-.483-.356-1.233-.646-1.846-.835 1.637-1.384 2.393-3.302 2.393-4.771 0 0 1.563 2.537 2.103 2.472.251-.03.581-1.39-.438-4.673z"/>
             </svg>
           </a>
           <a
             href="mailto:2490918758@qq.com"
-            class="dual-social-link"
+            class="social-link"
             title="QQ邮箱"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
             </svg>
           </a>
@@ -84,38 +89,15 @@
             href="https://linux.do/u/Eckes"
             target="_blank"
             rel="noopener noreferrer"
-            class="dual-social-link"
+            class="social-link"
             title="Linux.do"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.84-.41 1.684-.287 2.489.123.805.487 1.544 1.04 2.138l-.88.88c-.39.39-.39 1.024 0 1.414.195.195.451.293.707.293s.512-.098.707-.293l.88-.88c.594.553 1.333.917 2.138 1.04.805.123 1.649-.009 2.489-.287 1.771-.589 3.47-1.831 4.521-2.716 1.067-.75 1.928-.974 3.02-1.05 1.491-.065 5.965 1.056 6.298-3.17.013-.165.021-.325.021-.48 0-6.627-5.373-12-12-12zm-.21 2.5c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm-3.5 1.5c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm7 0c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm-10.5 2c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm14 0c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm-7 1.5c1.933 0 3.5 1.567 3.5 3.5s-1.567 3.5-3.5 3.5-3.5-1.567-3.5-3.5 1.567-3.5 3.5-3.5zm-8.5 2c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm17 0c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm-12.5 3c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm8 0c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm-6.5 2c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858zm5 0c.474 0 .858.384.858.858s-.384.858-.858.858-.858-.384-.858-.858.384-.858.858-.858z"/>
             </svg>
           </a>
         </div>
       </div>
-
-      <!-- 次栏：详细列表 -->
-      <Transition name="slide-left">
-        <div v-if="selectedCategory" class="dual-sub" :key="selectedCategory">
-          <div class="dual-sub-header">
-            <h3>{{ getCategoryName(selectedCategory) }}</h3>
-            <button class="dual-close" @click="selectedCategory = null">×</button>
-          </div>
-          <div class="dual-sub-content">
-            <div
-              v-for="site in getCategorySites(selectedCategory)"
-              :key="site.id"
-              class="dual-sub-item"
-              @click="handleSiteClick(site)"
-            >
-              <img v-if="site.icon" :src="site.icon" :alt="site.name" class="sub-icon-img" @error="handleIconError" />
-              <span v-else class="sub-icon">🌐</span>
-              <span class="sub-name">{{ site.name }}</span>
-              <span class="sub-arrow">→</span>
-            </div>
-          </div>
-        </div>
-      </Transition>
     </aside>
 
     <!-- 右侧主内容区 -->
@@ -616,49 +598,7 @@ const scrollToCategoryMobile = (categoryId) => {
   }, 200)
 }
 
-// 双栏导航相关
-const selectedCategory = ref(null) // 当前选中的分类
 
-// 选择分类
-const selectCategory = (categoryId) => {
-  if (selectedCategory.value === categoryId) {
-    selectedCategory.value = null // 再次点击则关闭
-  } else {
-    selectedCategory.value = categoryId
-  }
-}
-
-// 获取分类名称
-const getCategoryName = (categoryId) => {
-  const category = categories.value.find(cat => cat.id === categoryId)
-  return category ? category.name : ''
-}
-
-// 获取分类下的网站列表
-const getCategorySites = (categoryId) => {
-  const category = categories.value.find(cat => cat.id === categoryId)
-  return category ? category.sites : []
-}
-
-// 处理网站点击
-const handleSiteClick = (site) => {
-  // 记录访问统计
-  if (site.url) {
-    window.open(site.url, '_blank')
-  }
-}
-
-// 处理图标加载错误
-const handleIconError = (event) => {
-  event.target.style.display = 'none'
-  const parent = event.target.parentElement
-  if (parent) {
-    const iconSpan = document.createElement('span')
-    iconSpan.className = 'sub-icon'
-    iconSpan.textContent = '🌐'
-    parent.insertBefore(iconSpan, event.target)
-  }
-}
 
 // 组件挂载时获取数据
 onMounted(async () => {
@@ -784,235 +724,123 @@ onUnmounted(() => {
   background-color: #f5f7fa;
 }
 
-/* 双栏式侧边栏样式 */
-.sidebar.dual-sidebar {
-  width: auto;
-  display: flex;
-  flex-direction: row;
-  background: transparent;
+/* 左侧边栏样式 */
+.sidebar {
+  width: 280px;
+  background-color: #2c3e50;
+  color: white;
   padding: 0;
-  overflow: visible;
-}
-
-/* 主栏：图标导航 */
-.dual-main {
-  width: 80px;
-  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 0;
-  gap: 15px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   height: 100vh;
+  overflow: hidden;
   flex-shrink: 0;
 }
 
-.dual-logo {
-  margin-bottom: 10px;
-}
-
-.logo-small {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-}
-
-.dual-categories {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  overflow-y: auto;
-  padding: 10px 0;
-}
-
-.dual-categories::-webkit-scrollbar {
-  width: 4px;
-}
-
-.dual-categories::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 2px;
-}
-
-.dual-main-item {
-  width: 50px;
-  height: 50px;
+.logo-section {
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding-left: 20px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+  width: 55px;
+  height: 55px;
   border-radius: 12px;
+  margin-right: 15px;
+}
+
+.site-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+}
+
+.category-nav {
+  padding: 20px 0;
+  height: calc(100vh - 180px); /* 为底部留出空间 */
+  overflow-y: auto;
+}
+
+.nav-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 20px 15px;
+  color: #bdc3c7;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.1);
   position: relative;
 }
 
-.dual-main-item:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.1);
+.category-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 4px 0 0 #3498db;
 }
 
-.dual-main-item.active {
-  background: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+.category-icon {
+  font-size: 18px;
+  margin-right: 12px;
+  width: 20px;
+  text-align: center;
 }
 
-.dual-main-item.active::after {
-  content: '';
-  position: absolute;
-  right: -8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 0;
-  height: 0;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-left: 8px solid white;
+.category-name {
+  font-size: 15px;
+  font-weight: 500;
 }
 
-.dual-icon {
-  font-size: 24px;
-}
-
-.dual-social {
+/* 左侧边栏底部 */
+.sidebar-footer {
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
 }
 
-.dual-social-link {
+.social-links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  justify-items: center;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 40px;
   height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  transition: all 0.3s ease;
+  color: #bdc3c7;
   text-decoration: none;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-}
-
-.dual-social-link:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.1);
-}
-
-/* 次栏：详细列表 */
-.dual-sub {
-  width: 280px;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-  height: 100vh;
-}
-
-.dual-sub-header {
-  padding: 25px 20px;
-  border-bottom: 1px solid #e0e0e0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.dual-sub-header h3 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.dual-close {
-  width: 30px;
-  height: 30px;
-  border: none;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border-radius: 50%;
-  font-size: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.dual-close:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: rotate(90deg);
-}
-
-.dual-sub-content {
-  flex: 1;
-  padding: 15px;
-  overflow-y: auto;
-}
-
-.dual-sub-item {
-  padding: 15px;
-  margin-bottom: 10px;
-  background: #f8f9fa;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.dual-sub-item:hover {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-  transform: translateX(5px);
+.social-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  transform: translateY(-3px) scale(1.05);
 }
 
-.sub-icon {
-  font-size: 20px;
+.social-link svg {
   flex-shrink: 0;
-}
-
-.sub-icon-img {
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
-  flex-shrink: 0;
-}
-
-.sub-name {
-  flex: 1;
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-}
-
-.sub-arrow {
-  font-size: 16px;
-  color: #999;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.dual-sub-item:hover .sub-arrow {
-  opacity: 1;
-}
-
-/* 滑动动画 */
-.slide-left-enter-active,
-.slide-left-leave-active {
-  transition: all 0.3s ease;
-}
-
-.slide-left-enter-from {
-  transform: translateX(-100%);
-  opacity: 0;
-}
-
-.slide-left-leave-to {
-  transform: translateX(-100%);
-  opacity: 0;
 }
 
 /* 右侧主内容区样式 */
@@ -2187,39 +2015,9 @@ onUnmounted(() => {
   background-color: #1a1a1a;
 }
 
-.dark .sidebar.dual-sidebar {
-  background: transparent;
-}
-
-.dark .dual-main {
-  background: linear-gradient(180deg, #4c1d95 0%, #5b21b6 100%);
-}
-
-.dark .dual-sub {
-  background: #1e293b;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.dark .dual-sub-header {
-  background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%);
-  border-bottom: 1px solid #334155;
-}
-
-.dark .dual-sub-item {
-  background: #334155;
-  color: #e2e8f0;
-}
-
-.dark .dual-sub-item:hover {
-  background: linear-gradient(135deg, rgba(76, 29, 149, 0.3), rgba(91, 33, 182, 0.3));
-}
-
-.dark .sub-name {
-  color: #e2e8f0;
-}
-
-.dark .sub-arrow {
-  color: #94a3b8;
+.dark .sidebar {
+  background-color: #1e293b;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .dark .search-header {
