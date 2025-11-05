@@ -28,11 +28,103 @@
         <span v-else>🔇</span>
       </button>
 
+      <!-- 设置按钮 -->
+      <button class="control-btn" @click="showSettings = true" title="自定义设置">
+        <span>⚙️</span>
+      </button>
+
       <!-- 倒计时显示 -->
       <div v-if="countdown > 0" class="countdown">
         ⏱️ {{ formatTime(countdown) }}
       </div>
     </div>
+
+    <!-- 自定义设置弹窗 -->
+    <Transition name="modal-fade">
+      <div v-if="showSettings" class="modal-overlay" @click="showSettings = false">
+        <div class="settings-modal" @click.stop>
+          <h2 class="settings-title">⚙️ 自定义设置</h2>
+
+          <div class="settings-content">
+            <!-- 速度设置 -->
+            <div class="setting-group">
+              <label class="setting-label">🚀 飘动速度（秒）</label>
+              <input
+                type="range"
+                v-model.number="customSettings.speed"
+                min="2"
+                max="10"
+                step="0.5"
+                class="setting-slider"
+              />
+              <span class="setting-value">{{ customSettings.speed }}秒</span>
+            </div>
+
+            <!-- 生成间隔 -->
+            <div class="setting-group">
+              <label class="setting-label">⏱️ 生成间隔（毫秒）</label>
+              <input
+                type="range"
+                v-model.number="customSettings.interval"
+                min="100"
+                max="1000"
+                step="50"
+                class="setting-slider"
+              />
+              <span class="setting-value">{{ customSettings.interval }}ms</span>
+            </div>
+
+            <!-- 每次数量 -->
+            <div class="setting-group">
+              <label class="setting-label">🎯 每次生成数量</label>
+              <input
+                type="range"
+                v-model.number="customSettings.count"
+                min="1"
+                max="5"
+                step="1"
+                class="setting-slider"
+              />
+              <span class="setting-value">{{ customSettings.count }}个</span>
+            </div>
+
+            <!-- 自定义文字 -->
+            <div class="setting-group">
+              <label class="setting-label">✏️ 自定义文字（每行一条）</label>
+              <textarea
+                v-model="customSettings.customTexts"
+                class="setting-textarea"
+                placeholder="输入自定义文字，每行一条&#10;例如：&#10;我爱你&#10;想你了&#10;保持开心"
+                rows="6"
+              ></textarea>
+              <div class="setting-hint">
+                {{ customTextCount }}条自定义文字
+              </div>
+            </div>
+
+            <!-- 使用自定义文字 -->
+            <div class="setting-group">
+              <label class="setting-checkbox">
+                <input
+                  type="checkbox"
+                  v-model="customSettings.useCustomTexts"
+                />
+                <span>使用自定义文字（否则使用默认80条）</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="settings-buttons">
+            <button class="settings-btn settings-btn-reset" @click="resetSettings">
+              🔄 恢复默认
+            </button>
+            <button class="settings-btn settings-btn-apply" @click="applySettings">
+              ✅ 应用设置
+            </button>
+          </div>
+        </div>
+      </div>
+    </Transition>
 
     <!-- 初始弹窗 -->
     <Transition name="modal-fade">
@@ -86,7 +178,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 // 路由
@@ -101,6 +193,25 @@ const isMusicPlaying = ref(false)
 const timerMinutes = ref(0)
 const countdown = ref(0)
 const bgMusic = ref(null)
+const showSettings = ref(false)
+
+// 自定义设置
+const customSettings = ref({
+  speed: 6,           // 飘动速度（秒）
+  interval: 250,      // 生成间隔（毫秒）
+  count: 2,           // 每次生成数量
+  customTexts: '',    // 自定义文字
+  useCustomTexts: false  // 是否使用自定义文字
+})
+
+// 默认设置（用于恢复）
+const defaultSettings = {
+  speed: 6,
+  interval: 250,
+  count: 2,
+  customTexts: '',
+  useCustomTexts: false
+}
 
 let noteIdCounter = 0
 let uniqueIdCounter = 0
@@ -108,9 +219,52 @@ let intervalId = null
 let countdownId = null
 let usedPositions = [] // 记录已使用的位置
 
+// 计算自定义文字数量
+const customTextCount = computed(() => {
+  if (!customSettings.value.customTexts) return 0
+  return customSettings.value.customTexts.split('\n').filter(line => line.trim()).length
+})
+
+// 获取当前使用的便签数据
+const getCurrentNotesData = () => {
+  if (customSettings.value.useCustomTexts && customTextCount.value > 0) {
+    // 使用自定义文字
+    const lines = customSettings.value.customTexts.split('\n').filter(line => line.trim())
+    return lines.map(text => ({
+      emoji: getRandomEmoji(),
+      text: text.trim()
+    }))
+  }
+  // 使用默认数据
+  return notesData
+}
+
+// 随机获取emoji
+const getRandomEmoji = () => {
+  const emojis = ['❤️', '😊', '💕', '🥰', '✨', '💖', '🌟', '😘', '💝', '🌈', '🎈', '💗', '🌸', '🎀', '💐', '🌺', '🦋', '🌻', '🎁', '🍀']
+  return emojis[Math.floor(Math.random() * emojis.length)]
+}
+
 // 返回首页
 const goBack = () => {
   router.push('/')
+}
+
+// 恢复默认设置
+const resetSettings = () => {
+  customSettings.value = { ...defaultSettings }
+}
+
+// 应用设置
+const applySettings = () => {
+  showSettings.value = false
+  // 重启动画以应用新设置
+  if (intervalId) {
+    stopAnimation()
+    setTimeout(() => {
+      startAnimation()
+    }, 100)
+  }
 }
 
 // 便签内容数据（80条不重复的温馨话语）
@@ -267,21 +421,23 @@ const getRandomColor = () => {
 const createNote = () => {
   if (isPaused.value) return // 暂停时不生成
 
+  // 获取当前使用的数据源
+  const currentData = getCurrentNotesData()
+
   // 获取便签数据（随机或顺序）
   let noteData
   if (isRandom.value) {
     // 随机模式
-    const randomIndex = Math.floor(Math.random() * notesData.length)
-    noteData = notesData[randomIndex]
+    const randomIndex = Math.floor(Math.random() * currentData.length)
+    noteData = currentData[randomIndex]
   } else {
     // 顺序模式（循环）
-    noteData = notesData[noteIdCounter % notesData.length]
+    noteData = currentData[noteIdCounter % currentData.length]
     noteIdCounter++
   }
 
-  // 移动端便签飘得更快
-  const isMobile = window.innerWidth <= 768
-  const duration = isMobile ? 5 : 7 // 增加飘动时间，让便签更多
+  // 使用自定义速度设置
+  const duration = customSettings.value.speed
 
   const note = {
     id: uniqueIdCounter++,
@@ -313,10 +469,9 @@ const closeModal = () => {
 const startAnimation = () => {
   showModal.value = false
 
-  // 根据屏幕大小调整生成速度
-  const isMobile = window.innerWidth <= 768
-  const interval = isMobile ? 250 : 200 // 加快生成速度
-  const maxCount = isMobile ? 2 : 3 // 增加每次生成数量
+  // 使用自定义设置
+  const interval = customSettings.value.interval
+  const maxCount = customSettings.value.count
 
   // 生成便签
   intervalId = setInterval(() => {
@@ -591,6 +746,172 @@ onUnmounted(() => {
   0%, 100% { transform: rotate(0deg); }
   25% { transform: rotate(-10deg); }
   75% { transform: rotate(10deg); }
+}
+
+/* 设置弹窗 */
+.settings-modal {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 35px 30px;
+  border-radius: 25px;
+  max-width: 90%;
+  width: 500px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: modalBounce 0.4s ease-out;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.settings-title {
+  font-size: 28px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ff6b9d 0%, #ffa06b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.setting-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.setting-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 5px;
+  background: linear-gradient(to right, #ff6b9d, #ffa06b);
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.setting-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 2px solid #ff6b9d;
+}
+
+.setting-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 2px solid #ff6b9d;
+}
+
+.setting-value {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ff6b9d;
+  text-align: right;
+}
+
+.setting-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.setting-textarea:focus {
+  outline: none;
+  border-color: #ff6b9d;
+}
+
+.setting-hint {
+  font-size: 13px;
+  color: #666;
+  font-style: italic;
+}
+
+.setting-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #333;
+}
+
+.setting-checkbox input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #ff6b9d;
+}
+
+.settings-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.settings-btn {
+  flex: 1;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.settings-btn-reset {
+  background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+  color: white;
+}
+
+.settings-btn-reset:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.settings-btn-apply {
+  background: linear-gradient(135deg, #ff6b9d 0%, #ffa06b 100%);
+  color: white;
+}
+
+.settings-btn-apply:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+}
+
+.settings-btn:active {
+  transform: translateY(0);
 }
 
 .modal-title {
