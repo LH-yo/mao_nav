@@ -39,87 +39,141 @@
       </div>
     </div>
 
-    <!-- 自定义设置弹窗 -->
-    <Transition name="modal-fade">
-      <div v-if="showSettings" class="modal-overlay" @click="showSettings = false">
-        <div class="settings-modal" @click.stop>
-          <h2 class="settings-title">⚙️ 自定义设置</h2>
+    <!-- 自定义设置弹窗 - 新UI设计 -->
+    <Transition name="settings-slide">
+      <div v-if="showSettings" class="settings-overlay" @click="showSettings = false">
+        <div class="settings-panel" @click.stop>
+          <!-- 头部 -->
+          <div class="settings-header">
+            <div class="settings-header-left">
+              <div class="settings-icon">⚙️</div>
+              <h2 class="settings-title">自定义设置</h2>
+            </div>
+            <button class="settings-close" @click="showSettings = false">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
 
-          <div class="settings-content">
+          <!-- 内容区 -->
+          <div class="settings-body">
             <!-- 速度设置 -->
-            <div class="setting-group">
-              <label class="setting-label">🚀 飘动速度（秒）</label>
+            <div class="setting-card">
+              <div class="setting-card-header">
+                <span class="setting-icon">🚀</span>
+                <div class="setting-info">
+                  <div class="setting-name">飘动速度</div>
+                  <div class="setting-desc">控制便签飘动的快慢</div>
+                </div>
+                <div class="setting-value-badge">{{ customSettings.speed }}秒</div>
+              </div>
               <input
                 type="range"
                 v-model.number="customSettings.speed"
+                @input="applySettingsRealtime"
                 min="2"
                 max="10"
                 step="0.5"
-                class="setting-slider"
+                class="setting-range"
               />
-              <span class="setting-value">{{ customSettings.speed }}秒</span>
-            </div>
-
-            <!-- 生成间隔 -->
-            <div class="setting-group">
-              <label class="setting-label">⏱️ 生成间隔（毫秒）</label>
-              <input
-                type="range"
-                v-model.number="customSettings.interval"
-                min="100"
-                max="1000"
-                step="50"
-                class="setting-slider"
-              />
-              <span class="setting-value">{{ customSettings.interval }}ms</span>
-            </div>
-
-            <!-- 每次数量 -->
-            <div class="setting-group">
-              <label class="setting-label">🎯 每次生成数量</label>
-              <input
-                type="range"
-                v-model.number="customSettings.count"
-                min="1"
-                max="5"
-                step="1"
-                class="setting-slider"
-              />
-              <span class="setting-value">{{ customSettings.count }}个</span>
-            </div>
-
-            <!-- 自定义文字 -->
-            <div class="setting-group">
-              <label class="setting-label">✏️ 自定义文字（每行一条）</label>
-              <textarea
-                v-model="customSettings.customTexts"
-                class="setting-textarea"
-                placeholder="输入自定义文字，每行一条&#10;例如：&#10;我爱你&#10;想你了&#10;保持开心"
-                rows="6"
-              ></textarea>
-              <div class="setting-hint">
-                {{ customTextCount }}条自定义文字
+              <div class="setting-range-labels">
+                <span>快 2s</span>
+                <span>慢 10s</span>
               </div>
             </div>
 
-            <!-- 使用自定义文字 -->
-            <div class="setting-group">
-              <label class="setting-checkbox">
-                <input
-                  type="checkbox"
-                  v-model="customSettings.useCustomTexts"
-                />
-                <span>使用自定义文字（否则使用默认80条）</span>
-              </label>
+            <!-- 生成间隔 -->
+            <div class="setting-card">
+              <div class="setting-card-header">
+                <span class="setting-icon">⏱️</span>
+                <div class="setting-info">
+                  <div class="setting-name">生成间隔</div>
+                  <div class="setting-desc">控制生成新便签的频率</div>
+                </div>
+                <div class="setting-value-badge">{{ customSettings.interval }}ms</div>
+              </div>
+              <input
+                type="range"
+                v-model.number="customSettings.interval"
+                @input="applySettingsRealtime"
+                min="100"
+                max="1000"
+                step="50"
+                class="setting-range"
+              />
+              <div class="setting-range-labels">
+                <span>快 100ms</span>
+                <span>慢 1000ms</span>
+              </div>
+            </div>
+
+            <!-- 每次数量 -->
+            <div class="setting-card">
+              <div class="setting-card-header">
+                <span class="setting-icon">🎯</span>
+                <div class="setting-info">
+                  <div class="setting-name">每次数量</div>
+                  <div class="setting-desc">每次生成多少个便签</div>
+                </div>
+                <div class="setting-value-badge">{{ customSettings.count }}个</div>
+              </div>
+              <input
+                type="range"
+                v-model.number="customSettings.count"
+                @input="applySettingsRealtime"
+                min="1"
+                max="5"
+                step="1"
+                class="setting-range"
+              />
+              <div class="setting-range-labels">
+                <span>少 1个</span>
+                <span>多 5个</span>
+              </div>
+            </div>
+
+            <!-- 自定义文字 -->
+            <div class="setting-card setting-card-full">
+              <div class="setting-card-header">
+                <span class="setting-icon">✏️</span>
+                <div class="setting-info">
+                  <div class="setting-name">自定义文字</div>
+                  <div class="setting-desc">每行一条，支持emoji</div>
+                </div>
+                <label class="setting-switch">
+                  <input
+                    type="checkbox"
+                    v-model="customSettings.useCustomTexts"
+                    @change="applySettingsRealtime"
+                  />
+                  <span class="setting-switch-slider"></span>
+                </label>
+              </div>
+              <textarea
+                v-model="customSettings.customTexts"
+                class="setting-textarea"
+                placeholder="输入自定义文字，每行一条&#10;例如：&#10;💕 我爱你&#10;🌟 想你了&#10;😊 保持开心"
+                rows="5"
+              ></textarea>
+              <div class="setting-textarea-footer">
+                <span class="setting-count">{{ customTextCount }} 条</span>
+                <button class="setting-apply-text" @click="applySettingsRealtime">
+                  应用文字
+                </button>
+              </div>
             </div>
           </div>
 
-          <div class="settings-buttons">
-            <button class="settings-btn settings-btn-reset" @click="resetSettings">
-              🔄 恢复默认
-            </button>
-            <button class="settings-btn settings-btn-apply" @click="applySettings">
-              ✅ 应用设置
+          <!-- 底部按钮 -->
+          <div class="settings-footer">
+            <button class="settings-btn-secondary" @click="resetSettings">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M3 21v-5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              恢复默认
             </button>
           </div>
         </div>
@@ -253,17 +307,21 @@ const goBack = () => {
 // 恢复默认设置
 const resetSettings = () => {
   customSettings.value = { ...defaultSettings }
+  applySettingsRealtime()
 }
 
-// 应用设置
-const applySettings = () => {
-  showSettings.value = false
-  // 重启动画以应用新设置
+// 实时应用设置（不关闭弹窗）
+const applySettingsRealtime = () => {
+  // 如果动画正在运行，重启以应用新设置
   if (intervalId) {
+    const wasPaused = isPaused.value
     stopAnimation()
     setTimeout(() => {
       startAnimation()
-    }, 100)
+      if (wasPaused) {
+        isPaused.value = true
+      }
+    }, 50)
   }
 }
 
@@ -748,170 +806,452 @@ onUnmounted(() => {
   75% { transform: rotate(10deg); }
 }
 
-/* 设置弹窗 */
-.settings-modal {
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  padding: 35px 30px;
-  border-radius: 25px;
-  max-width: 90%;
-  width: 500px;
-  max-height: 85vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  animation: modalBounce 0.4s ease-out;
-  border: 2px solid rgba(255, 255, 255, 0.6);
+/* 设置弹窗遮罩 */
+.settings-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+/* 设置面板 */
+.settings-panel {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-radius: 24px;
+  max-width: 550px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+  overflow: hidden;
+}
+
+/* 设置面板动画 */
+@keyframes settingsSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.settings-slide-enter-active {
+  animation: settingsSlideIn 0.3s ease-out;
+}
+
+.settings-slide-leave-active {
+  animation: settingsSlideIn 0.2s ease-in reverse;
+}
+
+/* 头部 */
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.05) 0%, rgba(255, 160, 107, 0.05) 100%);
+}
+
+.settings-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.settings-icon {
+  font-size: 28px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .settings-title {
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.settings-close {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: #666;
+}
+
+.settings-close:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+  color: #333;
+}
+
+.settings-close:active {
+  transform: scale(0.95);
+}
+
+/* 内容区 */
+.settings-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.settings-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.settings-body::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
+
+.settings-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #ff6b9d, #ffa06b);
+  border-radius: 3px;
+}
+
+/* 设置卡片 */
+.setting-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.setting-card:hover {
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(255, 107, 157, 0.2);
+  transform: translateY(-2px);
+}
+
+.setting-card-full {
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.03) 0%, rgba(255, 160, 107, 0.03) 100%);
+}
+
+.setting-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.setting-icon {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.1) 0%, rgba(255, 160, 107, 0.1) 100%);
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.setting-info {
+  flex: 1;
+}
+
+.setting-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+}
+
+.setting-desc {
+  font-size: 13px;
+  color: #666;
+}
+
+.setting-value-badge {
   background: linear-gradient(135deg, #ff6b9d 0%, #ffa06b 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 25px;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(255, 107, 157, 0.3);
+  min-width: 60px;
   text-align: center;
 }
 
-.settings-content {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.setting-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.setting-label {
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.setting-slider {
+/* 滑块样式 */
+.setting-range {
   width: 100%;
-  height: 8px;
-  border-radius: 5px;
-  background: linear-gradient(to right, #ff6b9d, #ffa06b);
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right,
+    rgba(255, 107, 157, 0.2) 0%,
+    rgba(255, 160, 107, 0.2) 100%);
   outline: none;
   -webkit-appearance: none;
+  cursor: pointer;
+  position: relative;
 }
 
-.setting-slider::-webkit-slider-thumb {
+.setting-range::-webkit-slider-track {
+  height: 6px;
+  border-radius: 3px;
+  background: transparent;
+}
+
+.setting-range::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: white;
+  background: linear-gradient(135deg, #ff6b9d 0%, #ffa06b 100%);
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  border: 2px solid #ff6b9d;
+  box-shadow: 0 2px 8px rgba(255, 107, 157, 0.4);
+  transition: all 0.2s ease;
 }
 
-.setting-slider::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
+.setting-range::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.5);
+}
+
+.setting-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: white;
+  background: linear-gradient(135deg, #ff6b9d 0%, #ffa06b 100%);
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  border: 2px solid #ff6b9d;
+  box-shadow: 0 2px 8px rgba(255, 107, 157, 0.4);
+  border: none;
+  transition: all 0.2s ease;
 }
 
-.setting-value {
-  font-size: 14px;
-  font-weight: bold;
-  color: #ff6b9d;
-  text-align: right;
+.setting-range::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.5);
 }
 
+.setting-range-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #999;
+}
+
+/* 文本框 */
 .setting-textarea {
   width: 100%;
-  padding: 12px;
-  border: 2px solid #e0e0e0;
+  padding: 14px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   font-size: 14px;
   font-family: inherit;
   resize: vertical;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  background: white;
+  line-height: 1.6;
 }
 
 .setting-textarea:focus {
   outline: none;
   border-color: #ff6b9d;
+  box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
 }
 
-.setting-hint {
+.setting-textarea::placeholder {
+  color: #999;
+}
+
+.setting-textarea-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.setting-count {
   font-size: 13px;
   color: #666;
-  font-style: italic;
+  font-weight: 500;
 }
 
-.setting-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  font-size: 15px;
-  color: #333;
-}
-
-.setting-checkbox input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  accent-color: #ff6b9d;
-}
-
-.settings-buttons {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.settings-btn {
-  flex: 1;
-  padding: 14px 20px;
-  border: none;
-  border-radius: 15px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.settings-btn-reset {
-  background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
-  color: white;
-}
-
-.settings-btn-reset:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-.settings-btn-apply {
+.setting-apply-text {
+  padding: 6px 16px;
   background: linear-gradient(135deg, #ff6b9d 0%, #ffa06b 100%);
   color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(255, 107, 157, 0.3);
 }
 
-.settings-btn-apply:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+.setting-apply-text:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(255, 107, 157, 0.4);
 }
 
-.settings-btn:active {
+.setting-apply-text:active {
   transform: translateY(0);
+}
+
+/* 开关按钮 */
+.setting-switch {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.setting-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.setting-switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 26px;
+  transition: all 0.3s ease;
+}
+
+.setting-switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.setting-switch input:checked + .setting-switch-slider {
+  background: linear-gradient(135deg, #ff6b9d 0%, #ffa06b 100%);
+}
+
+.setting-switch input:checked + .setting-switch-slider:before {
+  transform: translateX(22px);
+}
+
+/* 底部 */
+.settings-footer {
+  padding: 20px 28px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.02);
+  display: flex;
+  justify-content: center;
+}
+
+.settings-btn-secondary {
+  padding: 12px 24px;
+  background: white;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #333;
+  transform: translateY(-1px);
+}
+
+.settings-btn-secondary:active {
+  transform: translateY(0);
+}
+
+.settings-btn-secondary svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .settings-panel {
+    max-width: 100%;
+    max-height: 95vh;
+    border-radius: 20px 20px 0 0;
+    margin-top: auto;
+  }
+
+  .settings-header {
+    padding: 20px 20px;
+  }
+
+  .settings-title {
+    font-size: 20px;
+  }
+
+  .settings-body {
+    padding: 20px;
+  }
+
+  .setting-card {
+    padding: 16px;
+  }
+
+  .setting-card-header {
+    margin-bottom: 12px;
+  }
+
+  .setting-name {
+    font-size: 15px;
+  }
+
+  .setting-desc {
+    font-size: 12px;
+  }
+
+  .settings-footer {
+    padding: 16px 20px;
+  }
 }
 
 .modal-title {
