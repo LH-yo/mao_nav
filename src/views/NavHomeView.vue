@@ -1279,7 +1279,7 @@ onUnmounted(() => {
   justify-content: center;
   gap: 10px;
   padding: 15px 20px;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   color: white;
@@ -1287,15 +1287,15 @@ onUnmounted(() => {
   border-radius: 12px;
   font-size: 16px;
   font-weight: 600;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
-  border: 1.5px solid rgba(0, 0, 0, 0.3);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
 }
 
 .mobile-gift-btn:active {
   transform: scale(0.98);
-  background: linear-gradient(135deg, #2d2d2d 0%, #404040 100%);
-  border-color: rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .mobile-gift-btn .gift-icon {
@@ -2211,12 +2211,12 @@ onUnmounted(() => {
   }
 }
 
-/* 礼物按钮样式 - 浅色模式黑色背景 */
+/* 礼物按钮样式 - 玻璃透明效果 */
 .gift-btn {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1.5px solid rgba(0, 0, 0, 0.3);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
   color: white;
   cursor: pointer;
   padding: 8px 12px;
@@ -2227,7 +2227,7 @@ onUnmounted(() => {
   justify-content: center;
   margin-right: 10px;
   text-decoration: none;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   position: relative;
   overflow: hidden;
 }
@@ -2240,7 +2240,7 @@ onUnmounted(() => {
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
   transform: translate(-50%, -50%);
   transition: width 0.6s, height 0.6s;
 }
@@ -2251,10 +2251,10 @@ onUnmounted(() => {
 }
 
 .gift-btn:hover {
-  background: linear-gradient(135deg, #2d2d2d 0%, #404040 100%);
-  border-color: rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
   transform: scale(1.05) translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .gift-icon {
