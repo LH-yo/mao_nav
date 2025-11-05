@@ -25,13 +25,19 @@
     <div class="demo-preview">
       <div class="preview-container">
         <!-- 方案1：现代卡片式 -->
-        <div v-if="currentScheme === 1" class="sidebar sidebar-scheme-1">
-          <div class="logo-section">
-            <img src="/logo.png" alt="logo" class="logo" />
-            <h1 class="site-title">Eckes导航</h1>
+        <div v-if="currentScheme === 1" class="sidebar sidebar-scheme-1" :class="{ collapsed: isCollapsed }">
+          <div class="collapse-toggle" @click="isCollapsed = !isCollapsed">
+            <span class="toggle-icon">{{ isCollapsed ? '☰' : '✕' }}</span>
           </div>
 
-          <div class="category-search">
+          <div class="logo-section">
+            <img src="/logo.png" alt="logo" class="logo" />
+            <Transition name="fade">
+              <h1 v-if="!isCollapsed" class="site-title">Eckes导航</h1>
+            </Transition>
+          </div>
+
+          <div v-if="!isCollapsed" class="category-search">
             <input type="text" placeholder="🔍 搜索分类..." v-model="searchText" />
           </div>
 
@@ -42,31 +48,42 @@
               class="category-card"
               :style="{ background: cat.gradient }"
               @click="selectCategory(cat.id)"
+              :title="isCollapsed ? cat.name : ''"
             >
               <div class="card-icon">{{ cat.icon }}</div>
-              <div class="card-info">
-                <div class="card-name">{{ cat.name }}</div>
-                <div class="card-count">{{ cat.count }} 个网站</div>
-              </div>
-              <div class="card-arrow">→</div>
+              <Transition name="fade">
+                <div v-if="!isCollapsed" class="card-info">
+                  <div class="card-name">{{ cat.name }}</div>
+                  <div class="card-count">{{ cat.count }} 个网站</div>
+                </div>
+              </Transition>
+              <Transition name="fade">
+                <div v-if="!isCollapsed" class="card-arrow">→</div>
+              </Transition>
             </div>
           </div>
 
           <div class="sidebar-footer-demo">
             <div class="social-links-demo">
-              <a href="#" class="social-link">📺</a>
-              <a href="#" class="social-link">💬</a>
-              <a href="#" class="social-link">📧</a>
-              <a href="#" class="social-link">🌐</a>
+              <a href="#" class="social-link" :title="isCollapsed ? '哔哩哔哩' : ''">📺</a>
+              <a href="#" class="social-link" :title="isCollapsed ? 'QQ' : ''">💬</a>
+              <a href="#" class="social-link" :title="isCollapsed ? '邮箱' : ''">📧</a>
+              <a href="#" class="social-link" :title="isCollapsed ? 'Linux.do' : ''">🌐</a>
             </div>
           </div>
         </div>
 
         <!-- 方案2：侧边抽屉式 -->
-        <div v-if="currentScheme === 2" class="sidebar sidebar-scheme-2">
+        <div v-if="currentScheme === 2" class="sidebar sidebar-scheme-2" :class="{ collapsed: isCollapsed }">
+          <div class="collapse-toggle" @click="isCollapsed = !isCollapsed">
+            <span class="toggle-icon">{{ isCollapsed ? '☰' : '✕' }}</span>
+          </div>
+
           <div class="logo-section">
             <img src="/logo.png" alt="logo" class="logo" />
-            <h1 class="site-title">Eckes导航</h1>
+            <Transition name="fade">
+              <h1 v-if="!isCollapsed" class="site-title">Eckes导航</h1>
+            </Transition>
           </div>
 
           <nav class="drawer-nav">
@@ -78,12 +95,18 @@
             >
               <div class="drawer-header" @click="toggleCategory(cat.id)">
                 <span class="drawer-icon" :class="{ rotate: expandedCat === cat.id }">{{ cat.icon }}</span>
-                <span class="drawer-name">{{ cat.name }}</span>
-                <span class="drawer-badge" v-if="cat.badge">{{ cat.badge }}</span>
-                <span class="drawer-arrow" :class="{ rotate: expandedCat === cat.id }">▼</span>
+                <Transition name="fade">
+                  <span v-if="!isCollapsed" class="drawer-name">{{ cat.name }}</span>
+                </Transition>
+                <Transition name="fade">
+                  <span v-if="!isCollapsed && cat.badge" class="drawer-badge">{{ cat.badge }}</span>
+                </Transition>
+                <Transition name="fade">
+                  <span v-if="!isCollapsed" class="drawer-arrow" :class="{ rotate: expandedCat === cat.id }">▼</span>
+                </Transition>
               </div>
               <Transition name="drawer-expand">
-                <div v-if="expandedCat === cat.id" class="drawer-content">
+                <div v-if="expandedCat === cat.id && !isCollapsed" class="drawer-content">
                   <div class="drawer-subitem">子分类 1</div>
                   <div class="drawer-subitem">子分类 2</div>
                   <div class="drawer-subitem">子分类 3</div>
@@ -94,10 +117,10 @@
 
           <div class="sidebar-footer-demo">
             <div class="social-links-demo">
-              <a href="#" class="social-link">📺</a>
-              <a href="#" class="social-link">💬</a>
-              <a href="#" class="social-link">📧</a>
-              <a href="#" class="social-link">🌐</a>
+              <a href="#" class="social-link" :title="isCollapsed ? '哔哩哔哩' : ''">📺</a>
+              <a href="#" class="social-link" :title="isCollapsed ? 'QQ' : ''">💬</a>
+              <a href="#" class="social-link" :title="isCollapsed ? '邮箱' : ''">📧</a>
+              <a href="#" class="social-link" :title="isCollapsed ? 'Linux.do' : ''">🌐</a>
             </div>
           </div>
         </div>
@@ -221,6 +244,7 @@ const searchText = ref('')
 const expandedCat = ref(null)
 const isHovered = ref(false)
 const selectedCat = ref(null)
+const isCollapsed = ref(false)
 
 const schemes = [
   {
@@ -378,13 +402,20 @@ const selectCategory = (id) => {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  background: #f8f9fa;
+  background: rgba(248, 249, 250, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .logo-section {
   padding: 25px 20px;
   text-align: center;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .logo {
@@ -392,6 +423,7 @@ const selectCategory = (id) => {
   height: 50px;
   border-radius: 12px;
   margin-bottom: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .site-title {
@@ -404,6 +436,40 @@ const selectCategory = (id) => {
 /* 方案1：现代卡片式 */
 .sidebar-scheme-1 {
   width: 320px;
+  background: linear-gradient(180deg, rgba(224, 242, 241, 0.85) 0%, rgba(178, 223, 219, 0.85) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.sidebar-scheme-1.collapsed {
+  width: 80px;
+}
+
+.sidebar-scheme-1 .collapse-toggle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  background: linear-gradient(135deg, rgba(38, 166, 154, 0.9) 0%, rgba(0, 137, 123, 0.9) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 137, 123, 0.3);
+}
+
+.sidebar-scheme-1 .collapse-toggle:hover {
+  background: linear-gradient(135deg, rgba(0, 137, 123, 0.95) 0%, rgba(0, 105, 92, 0.95) 100%);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 137, 123, 0.4);
 }
 
 .category-search {
@@ -413,16 +479,25 @@ const selectCategory = (id) => {
 .category-search input {
   width: 100%;
   padding: 12px 15px;
-  border: 2px solid #e0e0e0;
+  border: 2px solid rgba(38, 166, 154, 0.3);
   border-radius: 10px;
   font-size: 14px;
   transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #00695c;
+}
+
+.category-search input::placeholder {
+  color: rgba(0, 105, 92, 0.6);
 }
 
 .category-search input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #26a69a;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 3px rgba(38, 166, 154, 0.15);
 }
 
 .category-cards {
@@ -441,17 +516,22 @@ const selectCategory = (id) => {
   gap: 12px;
   transition: all 0.3s ease;
   color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .category-card:hover {
   transform: translateX(5px) scale(1.02);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .card-icon {
   font-size: 28px;
   flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .card-info {
@@ -462,26 +542,100 @@ const selectCategory = (id) => {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 4px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .card-count {
   font-size: 12px;
   opacity: 0.9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .card-arrow {
   font-size: 20px;
   opacity: 0;
   transition: opacity 0.3s ease;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .category-card:hover .card-arrow {
   opacity: 1;
 }
 
+.sidebar-scheme-1.collapsed .category-card {
+  justify-content: center;
+  padding: 15px 10px;
+}
+
+.sidebar-scheme-1.collapsed .card-icon {
+  font-size: 32px;
+}
+
+.sidebar-scheme-1 .site-title {
+  color: #00695c;
+}
+
+.sidebar-scheme-1 .social-link {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(38, 166, 154, 0.3);
+}
+
+.sidebar-scheme-1 .social-link:hover {
+  background: rgba(38, 166, 154, 0.9);
+  border-color: rgba(0, 137, 123, 0.5);
+  transform: translateY(-3px) scale(1.05);
+}
+
+.sidebar-scheme-1.collapsed .social-links-demo {
+  flex-direction: column;
+  gap: 8px;
+}
+
 /* 方案2：侧边抽屉式 */
 .sidebar-scheme-2 {
   width: 280px;
+  background: linear-gradient(180deg, rgba(224, 242, 241, 0.85) 0%, rgba(178, 223, 219, 0.85) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.sidebar-scheme-2.collapsed {
+  width: 80px;
+}
+
+.sidebar-scheme-2 .collapse-toggle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  background: linear-gradient(135deg, rgba(38, 166, 154, 0.9) 0%, rgba(0, 137, 123, 0.9) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 137, 123, 0.3);
+}
+
+.sidebar-scheme-2 .collapse-toggle:hover {
+  background: linear-gradient(135deg, rgba(0, 137, 123, 0.95) 0%, rgba(0, 105, 92, 0.95) 100%);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 137, 123, 0.4);
+}
+
+.toggle-icon {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .drawer-nav {
@@ -494,8 +648,19 @@ const selectCategory = (id) => {
   margin-bottom: 8px;
   border-radius: 10px;
   overflow: hidden;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(38, 166, 154, 0.15);
+  border-left: 3px solid transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.drawer-item:hover {
+  border-left-color: #26a69a;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 12px rgba(38, 166, 154, 0.25);
 }
 
 .drawer-header {
@@ -508,12 +673,13 @@ const selectCategory = (id) => {
 }
 
 .drawer-header:hover {
-  background: #f0f0f0;
+  background: linear-gradient(90deg, rgba(38, 166, 154, 0.08) 0%, transparent 100%);
 }
 
 .drawer-icon {
   font-size: 22px;
   transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
 .drawer-icon.rotate {
@@ -524,22 +690,25 @@ const selectCategory = (id) => {
   flex: 1;
   font-size: 15px;
   font-weight: 500;
-  color: #333;
+  color: #00695c;
+  white-space: nowrap;
 }
 
 .drawer-badge {
   padding: 3px 8px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #26a69a 0%, #00897b 100%);
   color: white;
   border-radius: 12px;
   font-size: 11px;
   font-weight: 600;
+  box-shadow: 0 2px 4px rgba(38, 166, 154, 0.3);
 }
 
 .drawer-arrow {
   font-size: 12px;
-  color: #999;
+  color: #26a69a;
   transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
 .drawer-arrow.rotate {
@@ -548,6 +717,7 @@ const selectCategory = (id) => {
 
 .drawer-content {
   padding: 0 15px 15px 50px;
+  background: linear-gradient(180deg, rgba(38, 166, 154, 0.03) 0%, transparent 100%);
 }
 
 .drawer-subitem {
@@ -555,15 +725,26 @@ const selectCategory = (id) => {
   margin-bottom: 5px;
   border-radius: 6px;
   font-size: 14px;
-  color: #666;
+  color: #00695c;
   cursor: pointer;
   transition: all 0.2s ease;
+  position: relative;
+  padding-left: 20px;
+}
+
+.drawer-subitem::before {
+  content: '•';
+  position: absolute;
+  left: 8px;
+  color: #26a69a;
+  font-weight: bold;
 }
 
 .drawer-subitem:hover {
-  background: #f0f0f0;
-  color: #667eea;
+  background: linear-gradient(90deg, rgba(38, 166, 154, 0.15) 0%, rgba(38, 166, 154, 0.05) 100%);
+  color: #00897b;
   transform: translateX(3px);
+  padding-left: 24px;
 }
 
 .drawer-expand-enter-active,
@@ -578,29 +759,82 @@ const selectCategory = (id) => {
   opacity: 0;
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.sidebar-scheme-2 .logo-section {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+.sidebar-scheme-2 .site-title {
+  color: #00695c;
+  font-weight: 600;
+}
+
+.sidebar-scheme-2 .social-link {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(38, 166, 154, 0.3);
+  color: #00695c;
+}
+
+.sidebar-scheme-2 .social-link:hover {
+  background: rgba(38, 166, 154, 0.9);
+  border-color: rgba(0, 137, 123, 0.5);
+  color: white;
+  transform: translateY(-3px) scale(1.05);
+}
+
+.sidebar-scheme-2.collapsed .drawer-header {
+  justify-content: center;
+  padding: 15px 10px;
+}
+
+.sidebar-scheme-2.collapsed .social-links-demo {
+  flex-direction: column;
+  gap: 8px;
+}
+
 /* 方案3：极简悬浮式 */
 .sidebar-scheme-3 {
   width: 70px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(180deg, rgba(224, 242, 241, 0.75) 0%, rgba(178, 223, 219, 0.75) 100%);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
   transition: width 0.3s ease;
-  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  border-right: 1px solid rgba(38, 166, 154, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-scheme-3.expanded {
   width: 240px;
+  background: linear-gradient(180deg, rgba(224, 242, 241, 0.85) 0%, rgba(178, 223, 219, 0.85) 100%);
 }
 
 .minimal-logo {
   padding: 20px;
   text-align: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(38, 166, 154, 0.2);
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .logo-mini {
   width: 35px;
   height: 35px;
   border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .minimal-nav {
@@ -620,7 +854,9 @@ const selectCategory = (id) => {
 }
 
 .minimal-item:hover {
-  background: rgba(102, 126, 234, 0.1);
+  background: rgba(38, 166, 154, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .minimal-item::before {
@@ -631,8 +867,9 @@ const selectCategory = (id) => {
   transform: translateY(-50%);
   width: 3px;
   height: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #26a69a 0%, #00897b 100%);
   transition: height 0.3s ease;
+  box-shadow: 0 0 8px rgba(38, 166, 154, 0.5);
 }
 
 .minimal-item:hover::before {
@@ -642,12 +879,13 @@ const selectCategory = (id) => {
 .minimal-icon {
   font-size: 24px;
   flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .minimal-name {
   font-size: 15px;
   font-weight: 500;
-  color: #333;
+  color: #00695c;
   white-space: nowrap;
 }
 
@@ -668,7 +906,10 @@ const selectCategory = (id) => {
 
 .minimal-footer {
   padding: 15px;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: 1px solid rgba(38, 166, 154, 0.2);
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .minimal-social {
@@ -687,11 +928,17 @@ const selectCategory = (id) => {
   font-size: 18px;
   transition: all 0.3s ease;
   text-decoration: none;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(38, 166, 154, 0.2);
 }
 
 .minimal-link:hover {
-  background: rgba(102, 126, 234, 0.1);
+  background: rgba(38, 166, 154, 0.2);
+  border-color: rgba(38, 166, 154, 0.4);
   transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(38, 166, 154, 0.2);
 }
 
 /* 方案4：双栏式 */
@@ -703,12 +950,16 @@ const selectCategory = (id) => {
 
 .dual-main {
   width: 80px;
-  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(180deg, rgba(38, 166, 154, 0.85) 0%, rgba(0, 137, 123, 0.85) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px 0;
   gap: 15px;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 32px rgba(0, 0, 0, 0.1);
 }
 
 .dual-logo {
@@ -730,18 +981,26 @@ const selectCategory = (id) => {
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .dual-main-item:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
   transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .dual-main-item.active {
-  background: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .dual-main-item.active::after {
@@ -782,12 +1041,17 @@ const selectCategory = (id) => {
   font-size: 18px;
   transition: all 0.3s ease;
   text-decoration: none;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .dual-social-link:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
   transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .dual-sub {
