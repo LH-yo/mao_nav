@@ -2344,12 +2344,14 @@ onUnmounted(() => {
 }
 
 .dark .gift-btn {
-  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);
+  background: #374151;
+  border: 1px solid #4b5563;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .dark .gift-btn:hover {
-  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.6);
+  background: #4b5563;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 .dark .theme-toggle-btn {
@@ -2467,8 +2469,9 @@ onUnmounted(() => {
 }
 
 .dark .mobile-gift-btn {
-  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+  background: #374151;
+  border: 1px solid #4b5563;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .dark .mobile-social-footer {
