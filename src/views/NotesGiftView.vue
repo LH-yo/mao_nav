@@ -56,6 +56,14 @@
             </button>
           </div>
 
+          <!-- 滑动提示 -->
+          <div class="scroll-hint">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>向下滑动查看更多</span>
+          </div>
+
           <!-- 内容区 -->
           <div class="settings-body">
             <!-- 速度设置 -->
@@ -64,7 +72,7 @@
                 <span class="setting-icon">🚀</span>
                 <div class="setting-info">
                   <div class="setting-name">飘动速度</div>
-                  <div class="setting-desc">控制便签飘动的快慢</div>
+                  <div class="setting-desc">数值越小越快</div>
                 </div>
                 <div class="setting-value-badge">{{ customSettings.speed }}秒</div>
               </div>
@@ -78,8 +86,8 @@
                 class="setting-range"
               />
               <div class="setting-range-labels">
-                <span>快 2s</span>
-                <span>慢 10s</span>
+                <span>2s 快</span>
+                <span>10s 慢</span>
               </div>
             </div>
 
@@ -89,7 +97,7 @@
                 <span class="setting-icon">⏱️</span>
                 <div class="setting-info">
                   <div class="setting-name">生成间隔</div>
-                  <div class="setting-desc">控制生成新便签的频率</div>
+                  <div class="setting-desc">数值越小越频繁</div>
                 </div>
                 <div class="setting-value-badge">{{ customSettings.interval }}ms</div>
               </div>
@@ -103,8 +111,8 @@
                 class="setting-range"
               />
               <div class="setting-range-labels">
-                <span>快 100ms</span>
-                <span>慢 1000ms</span>
+                <span>100ms 快</span>
+                <span>1000ms 慢</span>
               </div>
             </div>
 
@@ -114,7 +122,7 @@
                 <span class="setting-icon">🎯</span>
                 <div class="setting-info">
                   <div class="setting-name">每次数量</div>
-                  <div class="setting-desc">每次生成多少个便签</div>
+                  <div class="setting-desc">同时生成的便签数</div>
                 </div>
                 <div class="setting-value-badge">{{ customSettings.count }}个</div>
               </div>
@@ -128,8 +136,8 @@
                 class="setting-range"
               />
               <div class="setting-range-labels">
-                <span>少 1个</span>
-                <span>多 5个</span>
+                <span>1个 少</span>
+                <span>5个 多</span>
               </div>
             </div>
 
@@ -825,19 +833,16 @@ onUnmounted(() => {
 
 /* 设置面板 */
 .settings-panel {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border-radius: 24px;
-  max-width: 550px;
+  background: #ffffff;
+  border-radius: 20px;
+  max-width: 480px;
   width: 100%;
-  max-height: 90vh;
+  max-height: 75vh;
   display: flex;
   flex-direction: column;
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   overflow: hidden;
+  border: 1px solid #e0e0e0;
 }
 
 /* 设置面板动画 */
@@ -865,35 +870,34 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 28px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  background: linear-gradient(135deg, rgba(255, 107, 157, 0.05) 0%, rgba(255, 160, 107, 0.05) 100%);
+  padding: 20px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  background: #fafafa;
 }
 
 .settings-header-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .settings-icon {
-  font-size: 28px;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  font-size: 24px;
 }
 
 .settings-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1a1a1a;
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
   margin: 0;
 }
 
 .settings-close {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border: none;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
+  background: #f0f0f0;
+  border-radius: 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -903,77 +907,100 @@ onUnmounted(() => {
 }
 
 .settings-close:hover {
-  background: rgba(0, 0, 0, 0.1);
-  transform: scale(1.05);
-  color: #333;
+  background: #e0e0e0;
+  color: #000;
 }
 
 .settings-close:active {
   transform: scale(0.95);
 }
 
+/* 滑动提示 */
+.scroll-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  background: #f5f5f5;
+  color: #999;
+  font-size: 13px;
+  border-bottom: 1px solid #e0e0e0;
+  animation: hintBounce 2s ease-in-out infinite;
+}
+
+@keyframes hintBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+
+.scroll-hint svg {
+  width: 16px;
+  height: 16px;
+}
+
 /* 内容区 */
 .settings-body {
   flex: 1;
   overflow-y: auto;
-  padding: 24px 28px;
+  padding: 20px 24px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .settings-body::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .settings-body::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 3px;
+  background: #f5f5f5;
 }
 
 .settings-body::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #ff6b9d, #ffa06b);
-  border-radius: 3px;
+  background: #ccc;
+  border-radius: 2px;
+}
+
+.settings-body::-webkit-scrollbar-thumb:hover {
+  background: #999;
 }
 
 /* 设置卡片 */
 .setting-card {
-  background: white;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    0 0 0 1px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease;
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s ease;
 }
 
 .setting-card:hover {
-  box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(255, 107, 157, 0.2);
-  transform: translateY(-2px);
+  background: #f5f5f5;
+  border-color: #ccc;
 }
 
 .setting-card-full {
-  background: linear-gradient(135deg, rgba(255, 107, 157, 0.03) 0%, rgba(255, 160, 107, 0.03) 100%);
+  background: #f5f5f5;
 }
 
 .setting-card-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
 .setting-icon {
-  font-size: 24px;
-  width: 40px;
-  height: 40px;
+  font-size: 20px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(255, 107, 157, 0.1) 0%, rgba(255, 160, 107, 0.1) 100%);
-  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
   flex-shrink: 0;
 }
 
@@ -982,87 +1009,79 @@ onUnmounted(() => {
 }
 
 .setting-name {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: #000;
   margin-bottom: 2px;
 }
 
 .setting-desc {
-  font-size: 13px;
-  color: #666;
+  font-size: 12px;
+  color: #999;
 }
 
 .setting-value-badge {
-  background: linear-gradient(135deg, #ff6b9d 0%, #ffa06b 100%);
-  color: white;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 14px;
+  background: #000;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 13px;
   font-weight: 600;
-  box-shadow: 0 2px 8px rgba(255, 107, 157, 0.3);
-  min-width: 60px;
+  min-width: 55px;
   text-align: center;
 }
 
 /* 滑块样式 */
 .setting-range {
   width: 100%;
-  height: 6px;
-  border-radius: 3px;
-  background: linear-gradient(to right,
-    rgba(255, 107, 157, 0.2) 0%,
-    rgba(255, 160, 107, 0.2) 100%);
+  height: 4px;
+  border-radius: 2px;
+  background: #e0e0e0;
   outline: none;
   -webkit-appearance: none;
   cursor: pointer;
-  position: relative;
 }
 
 .setting-range::-webkit-slider-track {
-  height: 6px;
-  border-radius: 3px;
-  background: transparent;
+  height: 4px;
+  border-radius: 2px;
+  background: #e0e0e0;
 }
 
 .setting-range::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #ff6b9d 0%, #ffa06b 100%);
+  background: #000;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(255, 107, 157, 0.4);
   transition: all 0.2s ease;
 }
 
 .setting-range::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.5);
+  transform: scale(1.15);
 }
 
 .setting-range::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #ff6b9d 0%, #ffa06b 100%);
+  background: #000;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(255, 107, 157, 0.4);
   border: none;
   transition: all 0.2s ease;
 }
 
 .setting-range::-moz-range-thumb:hover {
-  transform: scale(1.2);
-  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.5);
+  transform: scale(1.15);
 }
 
 .setting-range-labels {
   display: flex;
   justify-content: space-between;
-  margin-top: 8px;
-  font-size: 12px;
+  margin-top: 6px;
+  font-size: 11px;
   color: #999;
 }
 
@@ -1104,25 +1123,23 @@ onUnmounted(() => {
 }
 
 .setting-apply-text {
-  padding: 6px 16px;
-  background: linear-gradient(135deg, #ff6b9d 0%, #ffa06b 100%);
-  color: white;
+  padding: 6px 14px;
+  background: #000;
+  color: #fff;
   border: none;
-  border-radius: 8px;
-  font-size: 13px;
+  border-radius: 6px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(255, 107, 157, 0.3);
 }
 
 .setting-apply-text:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(255, 107, 157, 0.4);
+  background: #333;
 }
 
 .setting-apply-text:active {
-  transform: translateY(0);
+  transform: scale(0.95);
 }
 
 /* 开关按钮 */
@@ -1165,7 +1182,7 @@ onUnmounted(() => {
 }
 
 .setting-switch input:checked + .setting-switch-slider {
-  background: linear-gradient(135deg, #ff6b9d 0%, #ffa06b 100%);
+  background: #000;
 }
 
 .setting-switch input:checked + .setting-switch-slider:before {
@@ -1174,83 +1191,87 @@ onUnmounted(() => {
 
 /* 底部 */
 .settings-footer {
-  padding: 20px 28px;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  background: rgba(0, 0, 0, 0.02);
+  padding: 16px 24px;
+  border-top: 1px solid #e0e0e0;
+  background: #fafafa;
   display: flex;
   justify-content: center;
 }
 
 .settings-btn-secondary {
-  padding: 12px 24px;
-  background: white;
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: 600;
+  padding: 10px 20px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
   color: #666;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .settings-btn-secondary:hover {
-  background: rgba(0, 0, 0, 0.05);
-  border-color: rgba(0, 0, 0, 0.2);
-  color: #333;
-  transform: translateY(-1px);
+  background: #f5f5f5;
+  border-color: #999;
+  color: #000;
 }
 
 .settings-btn-secondary:active {
-  transform: translateY(0);
+  transform: scale(0.95);
 }
 
 .settings-btn-secondary svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 /* 移动端适配 */
 @media (max-width: 768px) {
   .settings-panel {
     max-width: 100%;
-    max-height: 95vh;
-    border-radius: 20px 20px 0 0;
+    max-height: 80vh;
+    border-radius: 16px 16px 0 0;
     margin-top: auto;
   }
 
   .settings-header {
-    padding: 20px 20px;
+    padding: 16px 20px;
   }
 
   .settings-title {
-    font-size: 20px;
+    font-size: 16px;
   }
 
   .settings-body {
-    padding: 20px;
+    padding: 16px 20px;
   }
 
   .setting-card {
-    padding: 16px;
+    padding: 14px;
   }
 
   .setting-card-header {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
   .setting-name {
-    font-size: 15px;
+    font-size: 13px;
   }
 
   .setting-desc {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .settings-footer {
-    padding: 16px 20px;
+    padding: 14px 20px;
+  }
+
+  .scroll-hint {
+    padding: 10px;
+    font-size: 12px;
   }
 }
 
